@@ -3,10 +3,11 @@ import multer from 'multer';
 import * as path from 'path';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import * as fs from 'fs';
 
 import Database from './db';
 
-import UserController from './controllers/UserController';
+import UserController from './controllers/User/UserController';
 import {
     registerValidation,
     loginValidation,
@@ -21,7 +22,7 @@ const db = Database.getConnection();
 
 const storage = multer.diskStorage({
     destination: (_, __, cb) => {
-        cb(null, 'uploads');
+        cb(null, 'src/uploads');
     },
     filename: (_, file, cb) => {
         cb(null, file.originalname);
@@ -48,6 +49,35 @@ app.post(
 );
 app.post('/api/hf/logout', UserController.logout);
 app.get('/api/hf/user', checkAuth, UserController.getUser);
+app.post('/api/hf/refreshAccessToken', UserController.refreshAccessToken);
+
+app.patch('/api/hf/userUpdate', checkAuth, UserController.updateUser);
+app.post(
+    '/api/hf/userAvatar',
+    checkAuth,
+    upload.single('avatar'),
+    (req: any, res) => {
+        res.json({
+            url: `uploads/${req.file.filename}`,
+        });
+    }
+);
+app.delete('/api/hf/userAvatar/:fileName', checkAuth, (req: any, res) => {
+    const filePath = path.join(__dirname, `uploads/${req.params.fileName}`);
+
+    fs.unlink(filePath, (err) => {
+        if (err) {
+            res.status(500).json({
+                message: 'Something went wrong',
+            });
+            return;
+        }
+
+        res.json({
+            message: 'File deleted',
+        });
+    });
+});
 
 const PORT = process.env.PORT;
 

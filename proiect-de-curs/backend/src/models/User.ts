@@ -50,6 +50,10 @@ const UserSchema = new mongoose.Schema<IUser>(
             type: String,
             default: '',
         },
+        description: {
+            type: String,
+            default: '',
+        },
         role: {
             type: String,
             enum: ['user', 'moderator', 'admin'],

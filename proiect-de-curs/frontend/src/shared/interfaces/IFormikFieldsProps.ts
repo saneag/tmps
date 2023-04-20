@@ -4,4 +4,5 @@ export interface IFormikFieldsProps {
     type?: string;
     errors?: any;
     touched?: any;
+    disabled?: boolean;
 }
