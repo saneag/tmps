@@ -1,128 +1,153 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Form, Formik } from 'formik';
-import * as Yup from 'yup';
+import { useAppDispatch } from 'redux/store';
 
-import FormikFields from './FormikFields';
+import { login, register, resetStatus } from 'redux/slices/authSlice';
+import { IUserRegister } from 'shared/interfaces/IUser';
 
-const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('* Email is required'),
-    password: Yup.string().required('* Password is required'),
-});
+import { FormikFields, ApiError } from './FormikFields';
+import { LoginSchema, RegisterSchema } from './FormikSchemas';
 
-const RegisterSchema = Yup.object().shape({
-    email: Yup.string()
-        .email('* Invalid email')
-        .required('* Email is required'),
-    password: Yup.string()
-        .min(4, '* Password is too short!')
-        .max(20, '* Password is too long!')
-        .required('* Password is required'),
-    name: Yup.string()
-        .min(3, '* Name is too short!')
-        .max(20, '* Name is too long!')
-        .required('* Name is required'),
-    confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], '* Password does not match')
-        .required('* Confirm password is required'),
-});
+interface IPayload {
+    isAuthenticated: boolean;
+    status: number;
+}
 
 const Login = () => {
+    const dispatch = useAppDispatch();
+
     const [isRegister, setIsRegister] = React.useState(false);
+    const [responseStatus, setResponseStatus] = React.useState(0);
 
     const handleClick = (setErrorsCallback: any, resetFormCallback: any) => {
         setIsRegister(!isRegister);
+        dispatch(resetStatus());
         setErrorsCallback({});
         resetFormCallback();
     };
 
+    const handleSubmit = (values: IUserRegister, actions: any) => {
+        validate(values).then(() => {});
+    };
+
+    const validate = async (values: IUserRegister) => {
+        const { password, email } = values;
+
+        if (isRegister) {
+            const { payload } = await dispatch(register(values));
+            const { status } = payload as IPayload;
+            setResponseStatus(status);
+            if (status === 409) {
+                return;
+            }
+        } else {
+            const { payload } = await dispatch(login({ email, password }));
+            const { status } = payload as IPayload;
+            setResponseStatus(status);
+
+            if (status === 401) {
+                return;
+            }
+        }
+        setIsRegister(false);
+    };
+
     return (
-        <div className="bg-blue-950 min-h-screen flex justify-center content-center flex-wrap">
+        <div className="flex min-h-screen flex-wrap content-center justify-center bg-blue-950">
             <motion.div
                 initial={{ opacity: 0, y: -100 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="sm:w-8/12 md:w-6/12 xl:w-4/12 max-[640px]:w-full rounded-2xl bg-white"
+                className="rounded-2xl bg-white max-[640px]:w-full sm:w-8/12 md:w-6/12 xl:w-4/12"
             >
                 <Formik
                     initialValues={{
                         email: '',
                         password: '',
-                        name: '',
+                        firstName: '',
+                        lastName: '',
                         confirmPassword: '',
                     }}
                     validationSchema={isRegister ? RegisterSchema : LoginSchema}
-                    onSubmit={(values, actions) => {
-                        console.log(values, actions);
-                        actions.setSubmitting(false);
+                    onSubmit={(values: IUserRegister, actions) => {
+                        handleSubmit(values, actions);
+                        actions.setSubmitting(true);
                     }}
                 >
-                    {({ errors, touched, setErrors, resetForm }) => (
+                    {({ setErrors, resetForm }) => (
                         <Form
-                            className="py-4 rounded-2xl flex flex-col flex-wrap
-                            content-center justify-center h-full w-full
-                            shadow-md shadow-gray-600 border-b-4 border-l-4
-                            border-gray-500"
+                            className="flex h-full w-full flex-col flex-wrap
+                            content-center justify-center rounded-2xl border-b-4
+                            border-l-4 border-gray-500 py-4 shadow-md
+                            shadow-gray-600"
                         >
                             {isRegister && (
-                                <>
-                                    <FormikFields
-                                        value={'name'}
-                                        placeholder={'name'}
-                                    />
-                                    {errors.name && touched.name ? (
-                                        <div className="text-red-500 font-bold -mt-3 mb-3">
-                                            {errors.name}
-                                        </div>
-                                    ) : null}
-                                </>
+                                <FormikFields
+                                    value={'firstName'}
+                                    placeholder={'firstname'}
+                                />
+                            )}
+                            {isRegister && (
+                                <FormikFields
+                                    value={'lastName'}
+                                    placeholder={'lastname'}
+                                />
                             )}
                             <FormikFields
                                 value={'email'}
                                 placeholder={'example@example.com'}
                             />
-                            {errors.email && touched.email ? (
-                                <div className="text-red-500 font-bold -mt-3 mb-3">
-                                    {errors.email}
-                                </div>
-                            ) : null}
                             <FormikFields
                                 value={'password'}
                                 placeholder={'password'}
                                 type={'password'}
                             />
-                            {errors.password && touched.password ? (
-                                <div className="text-red-500 font-bold -mt-3 mb-3">
-                                    {errors.password}
-                                </div>
-                            ) : null}
                             {isRegister && (
-                                <>
-                                    <FormikFields
-                                        value={'confirmPassword'}
-                                        placeholder={'confirm password'}
-                                        type={'password'}
-                                    />
-                                    {errors.confirmPassword &&
-                                        touched.confirmPassword && (
-                                            <div className="text-red-500 font-bold -mt-3 mb-3">
-                                                {errors.confirmPassword}
-                                            </div>
-                                        )}
-                                </>
+                                <FormikFields
+                                    value={'confirmPassword'}
+                                    placeholder={'confirm password'}
+                                    type={'password'}
+                                />
                             )}
+
+                            {!isRegister && responseStatus === 401 && (
+                                <ApiError
+                                    value={'Username or password is wrong'}
+                                />
+                            )}
+
+                            {isRegister && responseStatus === 409 && (
+                                <ApiError value={'Email already exist'} />
+                            )}
+
+                            {!isRegister && responseStatus === 500 && (
+                                <ApiError
+                                    value={'Something went wrong with server'}
+                                />
+                            )}
+
                             <div className="flex justify-around">
                                 <button
                                     type="submit"
-                                    className="rounded-full bg-blue-800 p-2
-                                    w-5/12 text-white self-center text-xl"
+                                    className="w-5/12 self-center
+                                    rounded-full border-b-4 border-blue-900
+                                    bg-gradient-to-r from-blue-500 to-blue-800 p-2
+                                    text-xl text-white shadow-md shadow-blue-500
+                                    hover:bg-gradient-to-br"
                                 >
                                     Submit
                                 </button>
                                 <button
                                     type="button"
-                                    className={`rounded-full bg-green-700 p-2 w-5/12 text-white self-center text-xl ${
-                                        isRegister ? 'bg-yellow-700' : ''
+                                    className={`w-5/12 self-center rounded-full 
+                                    border-b-4 border-green-900 bg-gradient-to-l 
+                                    from-green-500 to-green-800 p-2 text-xl 
+                                    text-white hover:bg-gradient-to-bl ${
+                                        isRegister
+                                            ? 'border-yellow-900 from-yellow-500 ' +
+                                              'to-yellow-800'
+                                            : ''
                                     }`}
                                     onClick={() =>
                                         handleClick(setErrors, resetForm)

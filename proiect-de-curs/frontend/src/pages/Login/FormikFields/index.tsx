@@ -1,14 +1,18 @@
-import { Field } from 'formik';
+import { ErrorMessage, Field } from 'formik';
 import React from 'react';
 
 import { IFormikFieldsProps } from 'shared/interfaces/IFormikFieldsProps';
 
-const FormikFields = ({ value, placeholder, type }: IFormikFieldsProps) => {
+export const FormikFields = ({
+    value,
+    placeholder,
+    type,
+}: IFormikFieldsProps) => {
     return (
         <>
             <label
                 htmlFor={value}
-                className="text-md max-[640px]:text-sm font-medium text-gray-400 capitalize"
+                className="text-md font-medium capitalize text-gray-400 max-[640px]:text-sm"
             >
                 {value}
             </label>
@@ -17,12 +21,25 @@ const FormikFields = ({ value, placeholder, type }: IFormikFieldsProps) => {
                 name={value}
                 placeholder={placeholder}
                 type={type || 'text'}
-                className="bg-cyan-900 rounded-md p-3 mb-4 text-white w-9/12
-                outline-none shadow-md shadow-cyan-700/50 hover:shadow-cyan-700/100
-                focus:shadow-cyan-700/100 duration-300 text-xl"
+                className="mb-4 w-9/12 rounded-md bg-cyan-900 p-3 text-xl
+                text-white shadow-md shadow-cyan-700/50 outline-none
+                duration-300 hover:shadow-cyan-700/100 focus:shadow-cyan-700/100"
+            />
+            <ErrorMessage
+                name={value}
+                component="div"
+                className="-mt-3 mb-3 font-bold text-red-500"
             />
         </>
     );
 };
 
-export default FormikFields;
+export const ApiError = ({ value }: IFormikFieldsProps) => {
+    return (
+        <div>
+            <p className="-mt-2 mb-3 text-center font-bold text-red-500">
+                {value}
+            </p>
+        </div>
+    );
+};
