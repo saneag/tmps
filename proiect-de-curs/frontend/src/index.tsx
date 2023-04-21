@@ -8,6 +8,7 @@ import { store } from 'redux/store';
 import './styles/styles.scss';
 
 import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
