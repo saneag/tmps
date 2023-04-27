@@ -84,13 +84,13 @@ const Login = () => {
                         >
                             {isRegister && (
                                 <FormikFields
-                                    value={'firstName'}
+                                    value={'firstname'}
                                     placeholder={'firstname'}
                                 />
                             )}
                             {isRegister && (
                                 <FormikFields
-                                    value={'lastName'}
+                                    value={'lastname'}
                                     placeholder={'lastname'}
                                 />
                             )}

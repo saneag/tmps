@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "070a2fcf-99c1-417b-9284-b32922b13b2c",
+		"_postman_id": "8a91cab3-acfa-4c35-ada9-a4b0484fc7fa",
 		"name": "HF",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27058887"
 	},
 	"item": [
 		{
@@ -12,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Alex\",\r\n    \"email\": \"garstea2002@mail.ru\",\r\n    \"password\": \"123123\"\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Alexandr\",\r\n    \"lastName\": \"Garstea\",\r\n    \"email\": \"garstea2002@mail.ru\",\r\n    \"password\": \"123123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -84,13 +85,7 @@
 					]
 				},
 				"method": "GET",
-				"header": [
-					{
-						"key": "accessToken",
-						"value": "{{accessToken}}",
-						"type": "default"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/user",
 					"host": [
@@ -115,6 +110,42 @@
 					],
 					"path": [
 						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserUpdate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"\",\r\n    \"lastName\": \"\",\r\n    \"email\": \"\",\r\n    \"avatarUrl\": \"\",\r\n    \"updatedAt\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user"
 					]
 				}
 			},

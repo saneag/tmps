@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 import links from 'assets/headerLinks.json';
@@ -14,18 +14,24 @@ interface Links {
 
 const Header = () => {
     const dispatch = useAppDispatch();
+    const location = useLocation();
+
     const user: IUserResponse = useAppSelector((state) => state.auth.user);
     const [isUserInfoOpen, setIsUserInfoOpen] = React.useState<boolean>(false);
     const dropdownRef = React.useRef<HTMLDivElement>(null);
     const dropdownButtonRef = React.useRef<HTMLButtonElement>(null);
 
-    const publicLinks: Links[] = links[0].publicLinks
-        ? links[0].publicLinks
-        : [];
+    const publicLinks = React.useMemo(() => links[0].publicLinks || [], []);
 
-    const [activeTab, setActiveTab] = React.useState<string>(
-        publicLinks[0].path
-    );
+    const [activeTab, setActiveTab] = React.useState<string>();
+
+    React.useEffect(() => {
+        if (publicLinks.some((link) => link.path === location.pathname)) {
+            setActiveTab(location.pathname);
+        } else {
+            setActiveTab('');
+        }
+    }, [location.pathname, publicLinks]);
 
     const handleLogout = () => {
         dispatch(logout());

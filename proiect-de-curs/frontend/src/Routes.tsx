@@ -8,7 +8,7 @@ export const useRoutes = (isAuthenticated: boolean) => {
         return (
             <Routes>
                 <Route path="/" element={<Pages.Home />} />
-                {/*<Route path="/userSettings" element={<Pages.UserSettings />} />*/}
+                <Route path="/userSettings" element={<Pages.UserSettings />} />
                 <Route path="*" element={<Pages.Home />} />
             </Routes>
         );

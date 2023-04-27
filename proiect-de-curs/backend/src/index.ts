@@ -49,6 +49,8 @@ app.post(
 app.post('/api/hf/logout', UserController.logout);
 app.get('/api/hf/user', checkAuth, UserController.getUser);
 
+app.patch('/api/hf/user', checkAuth, UserController.updateUser);
+
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => {

@@ -16,11 +16,11 @@ export interface IUserResponse extends IUser {
     role: 'user' | 'moderator' | 'admin';
     avatarUrl: string;
     createdAt: Date;
+    updatedAt: Date;
 }
 
 export interface IUserExtended extends IUserResponse {
     _id: string;
-    updatedAt: Date;
     friends: string[];
     friendRequests: string[];
     friendRequestsSent: string[];

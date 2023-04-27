@@ -169,7 +169,15 @@ export class UserController {
             return;
         }
 
-        const { firstName, lastName, email, role, avatarUrl, createdAt } = user;
+        const {
+            firstName,
+            lastName,
+            email,
+            role,
+            avatarUrl,
+            createdAt,
+            updatedAt,
+        } = user;
 
         res.status(200).json({
             firstName,
@@ -178,7 +186,14 @@ export class UserController {
             role,
             avatarUrl,
             createdAt,
+            updatedAt,
         });
+    }
+
+    public async updateUser(req: Request, res: Response): Promise<void> {
+        const user = await User.findById(req.params.userId).lean();
+
+        console.log(user);
     }
 }
 
