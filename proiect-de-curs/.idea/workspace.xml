@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="242aac1d-eb14-41a0-ada4-307e18b9ce02" name="Changes" comment="Finish backend login/register" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="SCSS File" />
+        <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2OgYWynF60KFXpMpoOq1DYsn3Vr" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feat/user-settings-page",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.nodejs.core.library.configured.version": "18.14.0",
+    "javascript.nodejs.core.library.typings.version": "18.14.0",
+    "jsx.switch.disabled": "true",
+    "last_opened_file_path": "C:/Users/garst/Desktop/tmps/proiect-de-curs/backend",
+    "list.type.of.created.stylesheet": "SCSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\garst\\Desktop\\tmps\\proiect-de-curs\\frontend\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Users\\garst\\Desktop\\tmps\\proiect-de-curs\\backend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="Push.Settings">
+    <force-push-targets>
+      <force-push-target remote-path="origin" branch="feat/login-register-backend" />
+    </force-push-targets>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend" />
+      <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend\src\uploads" />
+      <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\frontend\src" />
+      <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend\src\models" />
+      <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend\src\models\UserModel" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="backend" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="backend" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="frontend" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="frontend" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="npm.dev" />
+      <item itemvalue="npm.frontend" />
+      <item itemvalue="npm.backend" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="242aac1d-eb14-41a0-ada4-307e18b9ce02" name="Changes" comment="" />
+      <created>1681983732002</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681983732002</updated>
+      <workItem from="1681983747888" duration="216000" />
+      <workItem from="1681987554376" duration="194000" />
+      <workItem from="1682018450365" duration="2132000" />
+      <workItem from="1682064889136" duration="2404000" />
+      <workItem from="1682072230031" duration="4240000" />
+      <workItem from="1682092086457" duration="8905000" />
+      <workItem from="1682105906190" duration="4379000" />
+      <workItem from="1682152995874" duration="20995000" />
+      <workItem from="1682181450476" duration="1370000" />
+      <workItem from="1682183053850" duration="10178000" />
+      <workItem from="1682246808544" duration="15903000" />
+      <workItem from="1682273323744" duration="2420000" />
+      <workItem from="1682349866677" duration="1343000" />
+      <workItem from="1682619908835" duration="17000" />
+      <workItem from="1682619968127" duration="848000" />
+      <workItem from="1682626753618" duration="5221000" />
+    </task>
+    <task id="LOCAL-00001" summary="Finish backend login/register">
+      <created>1682182695503</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682182695503</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Finish backend login/register">
+      <created>1682182791569</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682182791569</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Finish backend login/register">
+      <created>1682183208708</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682183208708</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Finish backend login/register">
+      <created>1682183431572</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682183431572</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Finish backend login/register" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish backend login/register" />
+  </component>
+</project>
