@@ -6,7 +6,7 @@ import { Components } from './components';
 import { useRoutes } from './Routes';
 
 import './styles/App.scss';
-import { getUser } from './redux/slices/authSlice';
+import { getUser } from './redux/slices/userSlice';
 
 function App(): JSX.Element {
     const dispatch = useAppDispatch();

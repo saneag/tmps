@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 
 import links from 'assets/headerLinks.json';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { logout } from '../../redux/slices/authSlice';
+import { logout } from '../../redux/slices/userSlice';
 import { IUserResponse } from '../../shared/interfaces/IUser';
 
 interface Links {
@@ -14,29 +15,37 @@ interface Links {
 
 const Header = () => {
     const dispatch = useAppDispatch();
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const user: IUserResponse = useAppSelector((state) => state.auth.user);
     const [isUserInfoOpen, setIsUserInfoOpen] = React.useState<boolean>(false);
     const dropdownRef = React.useRef<HTMLDivElement>(null);
     const dropdownButtonRef = React.useRef<HTMLButtonElement>(null);
 
-    const publicLinks: Links[] = links[0].publicLinks
-        ? links[0].publicLinks
-        : [];
+    const publicLinks = React.useMemo(() => links[0].publicLinks || [], []);
 
-    const [activeTab, setActiveTab] = React.useState<string>(
-        publicLinks[0].path
-    );
+    const [activeTab, setActiveTab] = React.useState<string>();
+
+    React.useEffect(() => {
+        if (publicLinks.some((link) => link.path === location.pathname)) {
+            setActiveTab(location.pathname);
+        } else {
+            setActiveTab('');
+        }
+    }, [location.pathname, publicLinks]);
 
     const handleLogout = () => {
         dispatch(logout());
+        navigate('/');
     };
 
     return (
         <>
             <div className="h-16 bg-blue-800">
-                <div className="flex h-full flex-wrap content-center justify-around">
-                    <div></div>
-                    <div className="flex gap-5">
+                <div className="flex h-full flex-wrap content-center justify-center">
+                    <div className="w-1/3"></div>
+                    <div className="flex w-1/3 justify-center gap-5">
                         {publicLinks.map((link: Links) => {
                             return (
                                 <div
@@ -67,81 +76,85 @@ const Header = () => {
                             );
                         })}
                     </div>
-                    <div
-                        className="relative flex"
-                        onMouseLeave={() => setIsUserInfoOpen(false)}
-                    >
-                        <button
-                            className="flex items-center gap-1 text-white"
-                            onMouseEnter={() => setIsUserInfoOpen(true)}
-                            ref={dropdownButtonRef}
-                        >
-                            {user.avatarUrl === '' ? (
-                                <span className="material-symbols-outlined">
-                                    account_circle
-                                </span>
-                            ) : (
-                                <img
-                                    className="h-9 w-9 rounded-full"
-                                    src={`http://localhost:5000/${user.avatarUrl}`}
-                                    alt=""
-                                />
-                            )}
-                            <span className="ml-1">{user.firstName}</span>
-                            <span
-                                className="material-symbols-outlined relative top-0.5
-                                            text-sm text-white"
+                    <div className="relative flex w-1/3 justify-center">
+                        <div onMouseLeave={() => setIsUserInfoOpen(false)}>
+                            <button
+                                className="flex items-center gap-1 text-white"
+                                onMouseEnter={() => setIsUserInfoOpen(true)}
+                                ref={dropdownButtonRef}
                             >
-                                expand_more
-                            </span>
-                        </button>
-                        {isUserInfoOpen && (
-                            <div
-                                className="absolute top-9 z-10 w-44 divide-y
+                                {user.avatarUrl === '' ? (
+                                    <span className="material-symbols-outlined h-9 w-9 text-3xl">
+                                        account_circle
+                                    </span>
+                                ) : (
+                                    <div className="h-9 w-9 rounded-full">
+                                        <img
+                                            className="h-full w-full rounded-full object-cover"
+                                            src={`http://localhost:5000/${user.avatarUrl}`}
+                                            alt=""
+                                        />
+                                    </div>
+                                )}
+                                <span className="ml-1">{user.firstName}</span>
+                                <span
+                                    className="material-symbols-outlined relative top-0.5
+                                            text-sm text-white"
+                                >
+                                    expand_more
+                                </span>
+                            </button>
+                            {isUserInfoOpen && (
+                                <div
+                                    className="absolute top-[35px] z-10 w-44 divide-y
                                 divide-gray-100 rounded-lg bg-white shadow
                                 dark:divide-gray-600 dark:bg-gray-700 max-[768px]:right-0"
-                                ref={dropdownRef}
-                            >
-                                <div className="flex flex-col px-4 py-3 text-white">
-                                    <span className="truncate">
-                                        {user.firstName} {user.lastName}
-                                    </span>
-                                    <span className="truncate">
-                                        {user.email}
-                                    </span>
-                                </div>
-                                <ul
-                                    className="select-none px-4 py-3 text-white"
-                                    onClick={() => setIsUserInfoOpen(false)}
+                                    ref={dropdownRef}
                                 >
-                                    <li>
-                                        <Link
-                                            className="block"
-                                            to="/userSettings"
-                                        >
-                                            Settings
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="block" to="/">
-                                            A
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="block" to="/">
-                                            A
-                                        </Link>
-                                    </li>
-                                </ul>
-                                <div
-                                    className="select-none px-4 py-3 text-white"
-                                    role="button"
-                                    onClick={handleLogout}
-                                >
-                                    <span>Sign out</span>
+                                    <div className="flex flex-col px-4 py-3 text-white">
+                                        <span className="truncate">
+                                            {user.firstName} {user.lastName}
+                                        </span>
+                                        <span className="truncate">
+                                            {user.email}
+                                        </span>
+                                    </div>
+                                    <ul
+                                        className="select-none px-4 py-3 text-white"
+                                        onClick={() => setIsUserInfoOpen(false)}
+                                    >
+                                        <li>
+                                            <Link
+                                                className="block"
+                                                to="/userSettings"
+                                            >
+                                                Edit Profile
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                className="block"
+                                                to="/myPosts"
+                                            >
+                                                My Posts
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link className="block" to="/">
+                                                A
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                    <div
+                                        className="select-none px-4 py-3 text-white"
+                                        role="button"
+                                        onClick={handleLogout}
+                                    >
+                                        <span>Sign out</span>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

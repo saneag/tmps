@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="242aac1d-eb14-41a0-ada4-307e18b9ce02" name="Changes" comment="Finish backend login/register" />
+    <list default="true" id="242aac1d-eb14-41a0-ada4-307e18b9ce02" name="Changes" comment="WIP: user settings page" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +14,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="SCSS File" />
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -40,8 +40,8 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "feat/user-settings-page",
     "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "18.14.0",
-    "javascript.nodejs.core.library.typings.version": "18.14.0",
+    "javascript.nodejs.core.library.configured.version": "18.15.0",
+    "javascript.nodejs.core.library.typings.version": "18.15.0",
     "jsx.switch.disabled": "true",
     "last_opened_file_path": "C:/Users/garst/Desktop/tmps/proiect-de-curs/backend",
     "list.type.of.created.stylesheet": "SCSS",
@@ -66,11 +66,11 @@
       <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend\src\controllers\User" />
       <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend" />
       <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend\src\uploads" />
       <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\frontend\src" />
       <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend\src\models" />
-      <recent name="C:\Users\garst\Desktop\tmps\proiect-de-curs\backend\src\models\UserModel" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -134,6 +134,19 @@
       <workItem from="1682619908835" duration="17000" />
       <workItem from="1682619968127" duration="848000" />
       <workItem from="1682626753618" duration="5221000" />
+      <workItem from="1682788614970" duration="585000" />
+      <workItem from="1682791306143" duration="5000" />
+      <workItem from="1683142170873" duration="3527000" />
+      <workItem from="1683355583440" duration="3665000" />
+      <workItem from="1683803422821" duration="2768000" />
+      <workItem from="1683824689858" duration="1665000" />
+      <workItem from="1683828943498" duration="17000" />
+      <workItem from="1683902709045" duration="49000" />
+      <workItem from="1683902772017" duration="19000" />
+      <workItem from="1684069486910" duration="737000" />
+      <workItem from="1684145996041" duration="9263000" />
+      <workItem from="1684263819431" duration="1899000" />
+      <workItem from="1684304869806" duration="8207000" />
     </task>
     <task id="LOCAL-00001" summary="Finish backend login/register">
       <created>1682182695503</created>
@@ -163,7 +176,49 @@
       <option name="project" value="LOCAL" />
       <updated>1682183431572</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="WIP: user settings page">
+      <created>1684156977916</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1684156977916</updated>
+    </task>
+    <task id="LOCAL-00006" summary="WIP: user settings page">
+      <created>1684157196353</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1684157196353</updated>
+    </task>
+    <task id="LOCAL-00007" summary="WIP: user settings page">
+      <created>1684158328388</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1684158328388</updated>
+    </task>
+    <task id="LOCAL-00008" summary="WIP: user settings page">
+      <created>1684171572836</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1684171572836</updated>
+    </task>
+    <task id="LOCAL-00009" summary="WIP: user settings page">
+      <created>1684264781057</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1684264781057</updated>
+    </task>
+    <task id="LOCAL-00010" summary="WIP: user settings page">
+      <created>1684311782504</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1684311782504</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,6 +226,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Finish backend login/register" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finish backend login/register" />
+    <MESSAGE value="WIP: user settings page" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP: user settings page" />
   </component>
 </project>

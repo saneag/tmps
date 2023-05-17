@@ -3,11 +3,12 @@ import { motion } from 'framer-motion';
 import { Form, Formik } from 'formik';
 import { useAppDispatch } from 'redux/store';
 
-import { login, register, resetStatus } from 'redux/slices/authSlice';
+import { login, register, resetStatus } from 'redux/slices/userSlice';
 import { IUserRegister } from 'shared/interfaces/IUser';
 
 import { FormikFields, ApiError } from './FormikFields';
 import { LoginSchema, RegisterSchema } from './FormikSchemas';
+import { useNavigate } from 'react-router';
 
 interface IPayload {
     isAuthenticated: boolean;
@@ -19,6 +20,8 @@ const Login = () => {
 
     const [isRegister, setIsRegister] = React.useState(false);
     const [responseStatus, setResponseStatus] = React.useState(0);
+
+    const navigate = useNavigate();
 
     const handleClick = (setErrorsCallback: any, resetFormCallback: any) => {
         setIsRegister(!isRegister);
@@ -50,6 +53,8 @@ const Login = () => {
                 return;
             }
         }
+
+        navigate('/');
         setIsRegister(false);
     };
 

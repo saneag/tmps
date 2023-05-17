@@ -2,7 +2,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
 import axios from 'services/axios.service';
-import { IUserRegister, IUserResponse } from 'shared/interfaces/IUser';
+import {
+    IUserEdit,
+    IUserRegister,
+    IUserResponse,
+} from 'shared/interfaces/IUser';
 import { isAxiosError } from 'axios';
 
 export const login = createAsyncThunk(
@@ -93,6 +97,19 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 
 export const getUser = createAsyncThunk('auth/getUser', async () => {
     try {
+        if (!Cookies.get('refreshToken'))
+            return {
+                isAuthenticated: false,
+                userStatus: 401,
+                user: {} as IUserResponse,
+            };
+
+        const token = await axios.post('/refreshAccessToken', {
+            refreshToken: Cookies.get('refreshToken'),
+        });
+
+        Cookies.set('accessToken', token.data.accessToken);
+
         const response = await axios.get('/user', {
             headers: {
                 Authorization: `Bearer ${Cookies.get('accessToken')}`,
@@ -121,6 +138,79 @@ export const getUser = createAsyncThunk('auth/getUser', async () => {
     }
 });
 
+export const updateUser = createAsyncThunk(
+    'user/updateUser',
+    async (user: IUserEdit) => {
+        try {
+            const response = await axios.patch('/userUpdate', user, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('accessToken')}`,
+                },
+            });
+            return {
+                status: response ? response.status : 500,
+                user: response.data,
+                isAuthenticated: true,
+            };
+        } catch (error) {
+            if (isAxiosError(error)) {
+                return {
+                    status: error.response ? error.response.status : 409,
+                    user: {},
+                    isAuthenticated: true,
+                };
+            }
+
+            return {
+                status: 500,
+                user: {},
+                isAuthenticated: true,
+            };
+        }
+    }
+);
+
+export const addUserAvatar = createAsyncThunk(
+    'user/addUserAvatar',
+    async (formData: FormData) => {
+        try {
+            const response = await axios.post('/userAvatar', formData, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('accessToken')}`,
+                },
+            });
+            return {
+                url: response.data.url,
+            };
+        } catch (error) {
+            return {
+                url: '',
+            };
+        }
+    }
+);
+
+export const deleteUserAvatar = createAsyncThunk(
+    'user/deleteUserAvatar',
+    async (filePath: string) => {
+        try {
+            const fileName = filePath.split('uploads/')[1];
+            const response = await axios.delete(`/userAvatar/${fileName}`, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('accessToken')}`,
+                },
+            });
+            return {
+                url: '',
+            };
+        } catch (error) {
+            return {
+                status: 500,
+            };
+        }
+    }
+);
+
 const initialState = {
     status: 200,
     userStatus: 200,
@@ -128,7 +218,7 @@ const initialState = {
     user: {} as IUserResponse,
 };
 
-export const authSlice = createSlice({
+export const userSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
@@ -152,6 +242,7 @@ export const authSlice = createSlice({
             ) => {
                 state.user = action.payload.user;
                 state.userStatus = action.payload.userStatus;
+                state.isAuthenticated = action.payload.isAuthenticated;
             }
         );
         builder.addCase(logout.fulfilled, (state, action) => {
@@ -162,31 +253,17 @@ export const authSlice = createSlice({
             state.isAuthenticated = action.payload.isAuthenticated;
             state.user = action.payload.user;
         });
-        builder
-            .addMatcher(
-                (action) => action.type.endsWith('/fulfilled'),
-                (state, action: PayloadAction<any>) => {
-                    state.status = action.payload.status;
-                    state.isAuthenticated = action.payload.isAuthenticated;
-                }
-            )
-            .addMatcher(
-                (action) => action.type.endsWith('/rejected'),
-                (state, action: PayloadAction<any>) => {
-                    state.status = action.payload.status;
-                    state.isAuthenticated = action.payload.isAuthenticated;
-                }
-            )
-            .addMatcher(
-                (action) => action.type.endsWith('/pending'),
-                (state) => {
-                    state.status = 200;
-                    state.isAuthenticated = false;
-                }
-            );
+        builder.addCase(
+            updateUser.fulfilled,
+            (state, action: PayloadAction<any>) => {
+                state.status = action.payload.status;
+                state.user = action.payload.user;
+                state.isAuthenticated = true;
+            }
+        );
     },
 });
 
-export const { resetStatus } = authSlice.actions;
+export const { resetStatus } = userSlice.actions;
 
-export default authSlice.reducer;
+export default userSlice.reducer;

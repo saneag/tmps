@@ -12,15 +12,24 @@ export interface IUserRegister extends IUserLogin {
     confirmPassword: string;
 }
 
-export interface IUserResponse extends IUser {
-    role: 'user' | 'moderator' | 'admin';
+export interface IUserImage extends IUser {
     avatarUrl: string;
+}
+
+export interface IUserEdit extends IUser {
+    description: string;
+    avatarUrl: string;
+}
+
+export interface IUserResponse extends IUserImage {
+    role: 'user' | 'moderator' | 'admin';
     createdAt: Date;
+    updatedAt: Date;
+    description: string;
 }
 
 export interface IUserExtended extends IUserResponse {
     _id: string;
-    updatedAt: Date;
     friends: string[];
     friendRequests: string[];
     friendRequestsSent: string[];

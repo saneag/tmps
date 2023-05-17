@@ -11,3 +11,8 @@ export function saveAccessToken(accessToken: string) {
 export function getAccessToken() {
     return Cookies.get('accessToken');
 }
+
+export function destroyToken() {
+    Cookies.remove('accessToken');
+    Cookies.remove('refreshToken');
+}

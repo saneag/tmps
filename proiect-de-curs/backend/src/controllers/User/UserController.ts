@@ -2,10 +2,15 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
-import { comparePasswords, hashPassword } from '../utils/hashPassword';
+dotenv.config();
 
-import User from '../models/User';
-import { IDecodedJwt } from '../interfaces/IDecodedJwt';
+import { comparePasswords, hashPassword } from '../../utils/hashPassword';
+
+import User from '../../models/User';
+import { IDecodedJwt } from '../../interfaces/IDecodedJwt';
+import { UserBuilder } from './UserBuilder';
+import { userDestructuring } from '../../utils/userDestructuring';
+import * as console from 'console';
 
 export class UserController {
     private static _instance: UserController;
@@ -89,6 +94,28 @@ export class UserController {
     ): Promise<void> {
         try {
             const { refreshToken } = req.body;
+            let isExpired = false;
+
+            jwt.verify(
+                refreshToken,
+                process.env.JWTREFRESHSECRET as string,
+                function (err: any, decoded: any) {
+                    if (err) {
+                        isExpired = true;
+                    } else {
+                        const currentTime = Math.floor(Date.now() / 1000); // in seconds
+                        isExpired = decoded.exp < currentTime;
+                    }
+                }
+            );
+
+            if (isExpired) {
+                res.status(401).json({
+                    message: 'Invalid refresh token',
+                });
+                return;
+            }
+
             const decoded: IDecodedJwt = jwt.verify(
                 refreshToken,
                 process.env.JWTREFRESHSECRET as string
@@ -96,7 +123,6 @@ export class UserController {
 
             const user = await User.findOne({
                 _id: decoded.userId,
-                refreshToken,
             }).lean();
 
             if (!user) {
@@ -128,9 +154,16 @@ export class UserController {
         try {
             const passwordHash = await hashPassword(req.body.password);
 
+            const userBuilder = new UserBuilder();
+            userBuilder
+                .setFirstName(req.body.firstName)
+                .setLastName(req.body.lastName)
+                .setEmail(req.body.email)
+                .setPasswordHash(passwordHash)
+                .setAvatarUrl(req.body.avatarUrl);
+
             const user = new User({
-                ...req.body,
-                passwordHash,
+                ...userBuilder.build(),
             });
 
             await user.save();
@@ -169,15 +202,54 @@ export class UserController {
             return;
         }
 
-        const { firstName, lastName, email, role, avatarUrl, createdAt } = user;
+        res.status(200).json({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            role: user.role,
+            avatarUrl: user.avatarUrl,
+            description: user.description,
+        });
+    }
+
+    public async updateUser(req: Request, res: Response): Promise<void> {
+        const user = await User.findById(req.params.userId).lean();
+
+        if (!user) {
+            res.status(404).json({
+                message: 'User not found',
+            });
+            return;
+        }
+
+        const userBuilder = new UserBuilder();
+        userBuilder
+            .setFirstName(req.body.firstName)
+            .setLastName(req.body.lastName)
+            .setEmail(req.body.email)
+            .setAvatarUrl(req.body.avatarUrl)
+            .setDescription(req.body.description);
+
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.userId,
+            {
+                ...userBuilder.buildUpdate(),
+            },
+            {
+                new: true,
+            }
+        ).lean();
+
+        const destructuredUser = userDestructuring(updatedUser);
+        console.log(destructuredUser);
 
         res.status(200).json({
-            firstName,
-            lastName,
-            email,
-            role,
-            avatarUrl,
-            createdAt,
+            firstName: destructuredUser.firstName,
+            lastName: destructuredUser.lastName,
+            email: destructuredUser.email,
+            role: destructuredUser.role,
+            avatarUrl: destructuredUser.avatarUrl,
+            description: destructuredUser.description,
         });
     }
 }
