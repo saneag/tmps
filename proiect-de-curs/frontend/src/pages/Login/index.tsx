@@ -2,13 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Form, Formik } from 'formik';
 import { useAppDispatch } from 'redux/store';
+import { useNavigate } from 'react-router';
 
 import { login, register, resetStatus } from 'redux/slices/userSlice';
 import { IUserRegister } from 'shared/interfaces/IUser';
 
 import { FormikFields, ApiError } from './FormikFields';
 import { LoginSchema, RegisterSchema } from './FormikSchemas';
-import { useNavigate } from 'react-router';
 
 interface IPayload {
     isAuthenticated: boolean;

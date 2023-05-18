@@ -1,4 +1,4 @@
-export const userDestructuring = (user: any) => {
+export const UserDestructuring = (user: any) => {
     const {
         firstName,
         lastName,

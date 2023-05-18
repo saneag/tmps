@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import { IDecodedJwt } from '../../interfaces/IDecodedJwt';
+import { IDecodedJwt } from '../../interfaces/IUser/IDecodedJwt';
 
 export default (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(' ')[1];

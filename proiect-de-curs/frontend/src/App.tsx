@@ -10,11 +10,11 @@ import { getUser } from './redux/slices/userSlice';
 
 function App(): JSX.Element {
     const dispatch = useAppDispatch();
-    const status = useAppSelector((state) => state.auth.userStatus);
+    const status = useAppSelector((state) => state.userReducer.userStatus);
     const [isLoading, setIsLoading] = React.useState(true);
 
     const isAuthenticated = useAppSelector(
-        (state) => state.auth.isAuthenticated
+        (state) => state.userReducer.isAuthenticated
     );
 
     React.useEffect(() => {

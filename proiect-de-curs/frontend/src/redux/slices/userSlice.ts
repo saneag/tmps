@@ -13,7 +13,7 @@ export const login = createAsyncThunk(
     'auth/login',
     async (credentials: { email: string; password: string }) => {
         try {
-            const response = await axios.post('/login', credentials);
+            const response = await axios.post('/user/login', credentials);
             Cookies.set('accessToken', response.data.accessToken);
             Cookies.set('refreshToken', response.data.refreshToken);
 
@@ -48,7 +48,7 @@ export const register = createAsyncThunk(
     'auth/register',
     async (credentials: IUserRegister) => {
         try {
-            const response = await axios.post('/register', credentials);
+            const response = await axios.post('/user/register', credentials);
             return {
                 isAuthenticated: false,
                 status: response ? response.status : 500,
@@ -71,7 +71,7 @@ export const register = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async () => {
     try {
-        const response = await axios.post('/logout');
+        const response = await axios.post('/user/logout');
 
         Cookies.remove('accessToken');
         Cookies.remove('refreshToken');
@@ -104,7 +104,7 @@ export const getUser = createAsyncThunk('auth/getUser', async () => {
                 user: {} as IUserResponse,
             };
 
-        const token = await axios.post('/refreshAccessToken', {
+        const token = await axios.post('/user/refreshAccessToken', {
             refreshToken: Cookies.get('refreshToken'),
         });
 
@@ -138,11 +138,37 @@ export const getUser = createAsyncThunk('auth/getUser', async () => {
     }
 });
 
+export const getUserByEmail = createAsyncThunk(
+    'user/getUserByEmail',
+    async (email: string) => {
+        try {
+            const response = await axios.get(`/user/${email}`, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('accessToken')}`,
+                },
+            });
+            return {
+                visitedUser: response.data,
+            };
+        } catch (error) {
+            if (isAxiosError(error)) {
+                return {
+                    visitedUser: {},
+                };
+            }
+
+            return {
+                visitedUser: {},
+            };
+        }
+    }
+);
+
 export const updateUser = createAsyncThunk(
     'user/updateUser',
     async (user: IUserEdit) => {
         try {
-            const response = await axios.patch('/userUpdate', user, {
+            const response = await axios.patch(`/user/updateUser`, user, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('accessToken')}`,
                 },
@@ -174,7 +200,7 @@ export const addUserAvatar = createAsyncThunk(
     'user/addUserAvatar',
     async (formData: FormData) => {
         try {
-            const response = await axios.post('/userAvatar', formData, {
+            const response = await axios.post('/user/userAvatar', formData, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('accessToken')}`,
                 },
@@ -195,7 +221,7 @@ export const deleteUserAvatar = createAsyncThunk(
     async (filePath: string) => {
         try {
             const fileName = filePath.split('uploads/')[1];
-            const response = await axios.delete(`/userAvatar/${fileName}`, {
+            await axios.delete(`/user/userAvatar/${fileName}`, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('accessToken')}`,
                 },
@@ -216,10 +242,11 @@ const initialState = {
     userStatus: 200,
     isAuthenticated: false,
     user: {} as IUserResponse,
+    visitedUser: {} as IUserResponse,
 };
 
 export const userSlice = createSlice({
-    name: 'auth',
+    name: 'user',
     initialState,
     reducers: {
         resetStatus: (state) => {
@@ -245,6 +272,9 @@ export const userSlice = createSlice({
                 state.isAuthenticated = action.payload.isAuthenticated;
             }
         );
+        builder.addCase(getUserByEmail.fulfilled, (state, action) => {
+            state.visitedUser = action.payload.visitedUser;
+        });
         builder.addCase(logout.fulfilled, (state, action) => {
             state.isAuthenticated = action.payload.isAuthenticated;
             state.user = {} as IUserResponse;

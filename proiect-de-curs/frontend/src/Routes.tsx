@@ -8,7 +8,12 @@ export const useRoutes = (isAuthenticated: boolean) => {
         return (
             <Routes>
                 <Route path="/" element={<Pages.Home />} />
-                <Route path="/userSettings" element={<Pages.UserSettings />} />
+                <Route path="/groups" element={<Pages.Groups />} />
+                <Route path="/userProfile" element={<Pages.UserProfile />} />
+                <Route
+                    path="/userProfile/:email"
+                    element={<Pages.UserProfileAsGuest />}
+                />
                 <Route path="/myPosts" />
                 <Route path="*" element={<Pages.Home />} />
             </Routes>
