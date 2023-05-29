@@ -15,12 +15,17 @@ const CardHeader = ({ post }: PostCardProps) => {
     return (
         <div className="grid grid-cols-3 items-center border-b-2 p-3">
             <div className="flex w-52 items-center gap-2">
-                <Link to={`/userProfile/${post.creator.email}`}>
+                <Link
+                    to={`/userProfile/${post.creator.email}`}
+                    className="flex"
+                >
                     <Components.ImageRenderer
                         imageUrl={post.creator.avatarUrl}
                         type={'userAvatar'}
                         alt={''}
-                        className={'h-10 w-10 rounded-full shadow-md'}
+                        className={`h-10 w-10 rounded-full text-4xl ${
+                            post.creator.avatarUrl !== '' && 'shadow-md'
+                        }`}
                     />
                 </Link>
                 <Link to={`/userProfile/${post.creator.email}`}>
@@ -29,14 +34,14 @@ const CardHeader = ({ post }: PostCardProps) => {
                     </span>
                 </Link>
             </div>
-            <div className="col-start-2 row-start-2 flex justify-center md:row-start-1">
-                <span className="max-w-[100px] overflow-ellipsis text-2xl font-bold">
+            <div className="col-span-3 row-start-2 flex justify-center text-center md:col-span-1 md:col-start-2 md:row-span-2 md:row-start-1">
+                <span className="w-full overflow-ellipsis text-2xl font-bold">
                     {post.title}
                 </span>
             </div>
             {post.creator.email === user.email && (
                 <div className="col-start-3 flex justify-end pr-1">
-                    <EditButtons />
+                    <EditButtons postId={post._id} />
                 </div>
             )}
         </div>

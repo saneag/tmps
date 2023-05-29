@@ -1,18 +1,12 @@
 import mongoose from 'mongoose';
 
-import { IPostImage } from '../interfaces/IPost/IPost';
+import { IPost } from '../interfaces/IPost/IPost';
 
-const PostSchema = new mongoose.Schema<IPostImage>({
+const PostSchema = new mongoose.Schema<IPost>({
     title: {
         type: String,
         required: true,
         trim: true,
-        validate: {
-            validator: (value: string) => {
-                return /^[a-zA-Z0-9]+$/.test(value);
-            },
-            message: 'Please enter a valid title.',
-        },
         minLength: 3,
         maxLength: 50,
     },
@@ -67,4 +61,4 @@ const PostSchema = new mongoose.Schema<IPostImage>({
     },
 });
 
-export default mongoose.model<IPostImage>('Post', PostSchema);
+export default mongoose.model<IPost>('Post', PostSchema);

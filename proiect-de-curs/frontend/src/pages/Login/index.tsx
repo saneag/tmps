@@ -141,7 +141,7 @@ const Login = () => {
                                     text-xl text-white shadow-md shadow-blue-500
                                     hover:bg-gradient-to-br"
                                 >
-                                    Submit
+                                    {isRegister ? 'Register' : 'Login'}
                                 </button>
                                 <button
                                     type="button"
@@ -158,7 +158,7 @@ const Login = () => {
                                         handleClick(setErrors, resetForm)
                                     }
                                 >
-                                    {isRegister ? 'Login' : 'Register'}
+                                    {isRegister ? 'Back' : 'Register'}
                                 </button>
                             </div>
                         </Form>

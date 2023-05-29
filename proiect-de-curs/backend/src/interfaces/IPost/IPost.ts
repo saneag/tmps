@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
-import { IUser } from '../IUser/IUser';
+import { ISimpleUser, IUser } from '../IUser/IUser';
 
 export interface IPostMongo extends IPost, mongoose.Document {
     _id: string;
 }
 
-export interface IPost {
-    creator: IUser;
+export interface IPost extends IImagePost {
+    creator: ISimpleUser;
     title: string;
     content: string;
     createdAt: Date;
@@ -16,6 +16,19 @@ export interface IPost {
     tags: string[];
 }
 
-export interface IPostImage extends IPost {
+export interface IBasicPost {
+    title: string;
+    content: string;
+    creator: ISimpleUser;
+}
+
+export interface IImagePost extends IBasicPost {
     image: string;
+}
+
+export interface IPostUpdate {
+    title: string;
+    content: string;
+    image: string;
+    updatedAt: Date;
 }

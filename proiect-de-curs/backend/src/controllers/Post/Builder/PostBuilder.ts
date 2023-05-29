@@ -1,32 +1,29 @@
 import { IPostBuilder } from '../../../interfaces/IPost/Builder/IPostBuilder';
-import { IPost, IPostImage } from '../../../interfaces/IPost/IPost';
+import {
+    IImagePost,
+    IBasicPost,
+    IPostUpdate,
+} from '../../../interfaces/IPost/IPost';
+import { ISimpleUser } from '../../../interfaces/IUser/IUser';
 
 export class PostBuilder implements IPostBuilder {
-    public creatorId: string;
+    public creator: ISimpleUser;
     public title: string;
     public content: string;
     public image: string;
-    public createdAt: Date;
     public updatedAt: Date;
-    public comments: string[];
-    public reactions: string[];
-    public tags: string[];
 
     constructor() {
-        this.creatorId = '';
+        this.creator = {
+            firstName: '',
+            lastName: '',
+            avatarUrl: '',
+            email: '',
+        };
         this.title = '';
         this.content = '';
         this.image = '';
-        this.createdAt = new Date();
         this.updatedAt = new Date();
-        this.comments = [];
-        this.reactions = [];
-        this.tags = [];
-    }
-
-    setComments(comments: string[]): IPostBuilder {
-        this.comments = comments;
-        return this;
     }
 
     setContent(content: string): IPostBuilder {
@@ -39,23 +36,13 @@ export class PostBuilder implements IPostBuilder {
         return this;
     }
 
-    setCreatedAt(createdAt: Date): IPostBuilder {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    setReactions(reactions: string[]): IPostBuilder {
-        this.reactions = reactions;
-        return this;
-    }
-
-    setTags(tags: string[]): IPostBuilder {
-        this.tags = tags;
-        return this;
-    }
-
     setTitle(title: string): IPostBuilder {
         this.title = title;
+        return this;
+    }
+
+    setCreator(creator: ISimpleUser): IPostBuilder {
+        this.creator = creator;
         return this;
     }
 
@@ -64,48 +51,29 @@ export class PostBuilder implements IPostBuilder {
         return this;
     }
 
-    setCreatorId(creatorId: string): IPostBuilder {
-        this.creatorId = creatorId;
-        return this;
-    }
-
-    buildSimplePost(): IPost {
+    buildSimplePost(): IBasicPost {
         return {
-            creatorId: this.creatorId,
+            creator: this.creator,
             title: this.title,
             content: this.content,
-            createdAt: this.createdAt,
-            updatedAt: this.updatedAt,
-            comments: this.comments,
-            reactions: this.reactions,
-            tags: this.tags,
         };
     }
 
-    buildPostWithImages(): IPostImage {
+    buildPostWithImages(): IImagePost {
         return {
-            creatorId: this.creatorId,
+            creator: this.creator,
             title: this.title,
             content: this.content,
             image: this.image,
-            createdAt: this.createdAt,
-            updatedAt: this.updatedAt,
-            comments: this.comments,
-            reactions: this.reactions,
-            tags: this.tags,
         };
     }
 
-    buildUpdate(): IPost {
+    buildUpdate(): IPostUpdate {
         return {
-            creatorId: this.creatorId,
             title: this.title,
             content: this.content,
-            createdAt: this.createdAt,
+            image: this.image,
             updatedAt: this.updatedAt,
-            comments: this.comments,
-            reactions: this.reactions,
-            tags: this.tags,
         };
     }
 }

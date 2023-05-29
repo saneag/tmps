@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { IPostController } from '../../interfaces/IPost/IPostController';
 import { PostDecorator } from './Decorator/PostDecorator';
 import Post from '../../models/Post';
-import { PostDestructuring } from '../../utils/postDestructuring';
 import User from '../../models/User';
+import { PostBuilder } from './Builder/PostBuilder';
 
 class PostController implements IPostController {
     private static _instance: PostController;
@@ -43,15 +43,15 @@ class PostController implements IPostController {
             const postDecorator = new PostDecorator();
             const formattedText = postDecorator.decorateText(content);
 
+            const postBuilder = new PostBuilder();
+
+            const post = postBuilder
+                .setCreator(user)
+                .setTitle(title)
+                .setContent(formattedText);
+
             await Post.create({
-                title,
-                content: formattedText,
-                creator: {
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    avatarUrl: user.avatarUrl,
-                },
+                ...post.buildSimplePost(),
             });
 
             res.status(201).json({
@@ -90,16 +90,16 @@ class PostController implements IPostController {
             const postDecorator = new PostDecorator();
             const formattedText = postDecorator.decorateText(content);
 
+            const postBuilder = new PostBuilder();
+
+            const post = postBuilder
+                .setCreator(user)
+                .setTitle(title)
+                .setContent(formattedText)
+                .setImage(image);
+
             await Post.create({
-                title,
-                content: formattedText,
-                creator: {
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    avatarUrl: user.avatarUrl,
-                },
-                image,
+                ...post.buildPostWithImages(),
             });
 
             res.status(201).json({
@@ -113,7 +113,27 @@ class PostController implements IPostController {
     }
 
     public async deletePost(req: Request, res: Response): Promise<void> {
-        return Promise.resolve(undefined);
+        const { postId } = req.params;
+
+        try {
+            const post = await Post.findById(postId).lean();
+
+            if (!post) {
+                res.status(404).json({
+                    message: 'Post not found.',
+                });
+            }
+
+            await Post.findByIdAndDelete(postId);
+
+            res.status(200).json({
+                message: 'Post deleted successfully.',
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: 'Something went wrong.',
+            });
+        }
     }
 
     public async getPost(req: Request, res: Response): Promise<void> {
@@ -125,10 +145,23 @@ class PostController implements IPostController {
             const limit = parseInt(req.query.limit as string);
             const page = parseInt(req.query.page as string);
             const search = (req.query.search as string) || '';
+            const email = req.query.email || '';
 
-            const posts = await Post.find({
-                title: { $regex: search, $options: 'i' },
-            })
+            const query: any = {};
+
+            if (email !== '')
+                query['creator.email'] = { $regex: email, $options: 'i' };
+
+            if (search !== '')
+                query['$or'] = [
+                    { title: { $regex: search, $options: 'i' } },
+                    { 'creator.firstName': { $regex: search, $options: 'i' } },
+                    { 'creator.lastName': { $regex: search, $options: 'i' } },
+                ];
+
+            const totalPostsNumber = await Post.countDocuments(query);
+
+            const posts = await Post.find(query)
                 .limit(limit)
                 .skip(limit * (page - 1))
                 .sort({ createdAt: -1 });
@@ -146,6 +179,7 @@ class PostController implements IPostController {
             res.status(200).json({
                 message: 'Posts fetched successfully.',
                 posts: simplifiedPosts,
+                totalPostsNumber,
             });
         } catch (error) {
             res.status(500).json({

@@ -1,37 +1,35 @@
 import mongoose from 'mongoose';
 
-export interface IUser extends mongoose.Document {
+export interface IUser extends ISimpleUser, mongoose.Document {
     _id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
     passwordHash: string;
-    avatarUrl: string;
     description: string;
     role: 'user' | 'moderator' | 'admin';
     createdAt: Date;
     updatedAt: Date;
-    friends: string[];
-    friendRequests: string[];
-    friendRequestsSent: string[];
+    followers: string[];
+    following: string[];
+    followRequests: string[];
+    followingRequests: string[];
 }
 
 export interface IUserUpdate {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    passwordHash?: string;
-    avatarUrl?: string;
-    description?: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    avatarUrl: string;
+    description: string;
     role?: 'user' | 'moderator' | 'admin';
     updatedAt?: Date;
 }
 
-export interface IUserRegister {
+export interface IUserRegister extends ISimpleUser {
+    passwordHash: string;
+}
+
+export interface ISimpleUser {
     firstName: string;
     lastName: string;
     email: string;
-    passwordHash: string;
     avatarUrl: string;
-    description: string;
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { useNavigate } from 'react-router';
-import { IUserResponse } from '../../../shared/interfaces/IUser';
-import { logout } from '../../../redux/slices/userSlice';
-import { Components } from '../../index';
+
+import { useAppDispatch, useAppSelector } from 'redux/store';
+import { IUserResponse } from 'shared/interfaces/IUser';
+import { logout } from 'redux/slices/userSlice';
+import { Components } from 'components';
 
 interface Links {
     name: string;
@@ -79,7 +80,11 @@ const UserDropdown = ({ dropdownLinks }: ILinks) => {
                                 <li key={link.path}>
                                     <Link
                                         key={link.path}
-                                        to={link.path}
+                                        to={
+                                            link.path === '/myPosts'
+                                                ? `${link.path}/${user.email}`
+                                                : link.path
+                                        }
                                         className="block capitalize"
                                     >
                                         {link.name}
