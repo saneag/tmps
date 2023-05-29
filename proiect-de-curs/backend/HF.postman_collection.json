@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "070a2fcf-99c1-417b-9284-b32922b13b2c",
+		"_postman_id": "8a91cab3-acfa-4c35-ada9-a4b0484fc7fa",
 		"name": "HF",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27058887"
 	},
 	"item": [
 		{
@@ -12,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Alex\",\r\n    \"email\": \"garstea2002@mail.ru\",\r\n    \"password\": \"123123\"\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Alexandr\",\r\n    \"lastName\": \"Garstea\",\r\n    \"email\": \"garstea2002@mail.ru\",\r\n    \"password\": \"123123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,11 +21,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/register",
+					"raw": "{{baseUrl}}/user/register",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
+						"user",
 						"register"
 					]
 				}
@@ -59,11 +61,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/login",
+					"raw": "{{baseUrl}}/user/login",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
+						"user",
 						"login"
 					]
 				}
@@ -84,13 +87,7 @@
 					]
 				},
 				"method": "GET",
-				"header": [
-					{
-						"key": "accessToken",
-						"value": "{{accessToken}}",
-						"type": "default"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/user",
 					"host": [
@@ -109,11 +106,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/logout",
+					"raw": "{{baseUrl}}/user/logout",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
+						"user",
 						"logout"
 					]
 				}
@@ -137,7 +135,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"\",\r\n    \"lastName\": \"\",\r\n    \"email\": \"\",\r\n    \"avatarUrl\": \"\"\r\n}",
+					"raw": "{\r\n    \"firstName\": \"\",\r\n    \"lastName\": \"\",\r\n    \"passwordHash\": \"\",\r\n    \"email\": \"\",\r\n    \"avatarUrl\": \"\",\r\n    \"updatedAt\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -145,12 +143,96 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/userUpdate",
+					"raw": "{{baseUrl}}/user/updateUser",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"userUpdate"
+						"user",
+						"updateUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Hello\",\r\n    \"content\": \"<strong>Hello</strong> <em>Hi</em> <strong>world</strong>, <s>how</s>\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/create-post",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"create-post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/get-posts?limit=10&page=1&search=",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"get-posts"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "search",
+							"value": ""
+						}
 					]
 				}
 			},

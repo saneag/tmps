@@ -4,15 +4,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import { comparePasswords, hashPassword } from '../../utils/hashPassword';
+import { hashPassword, comparePasswords } from '../../utils/PasswordHashFacade';
 
 import User from '../../models/User';
-import { IDecodedJwt } from '../../interfaces/IDecodedJwt';
-import { UserBuilder } from './UserBuilder';
-import { userDestructuring } from '../../utils/userDestructuring';
-import * as console from 'console';
+import { IDecodedJwt } from '../../interfaces/IUser/IDecodedJwt';
+import { UserBuilder } from './Builder/UserBuilder';
+import { IUserController } from '../../interfaces/IUser/IUserController';
+import { UserDestructuring } from '../../utils/userDestructuring';
 
-export class UserController {
+export class UserController implements IUserController {
     private static _instance: UserController;
 
     private constructor() {}
@@ -212,6 +212,29 @@ export class UserController {
         });
     }
 
+    public async getUserByEmail(req: Request, res: Response): Promise<void> {
+        console.log(req.params.email);
+
+        const user = await User.findOne({
+            email: req.params.email,
+        }).lean();
+
+        if (!user) {
+            res.status(404).json({
+                message: 'User not found',
+            });
+            return;
+        }
+
+        res.status(200).json({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            avatarUrl: user.avatarUrl,
+            description: user.description,
+        });
+    }
+
     public async updateUser(req: Request, res: Response): Promise<void> {
         const user = await User.findById(req.params.userId).lean();
 
@@ -240,8 +263,7 @@ export class UserController {
             }
         ).lean();
 
-        const destructuredUser = userDestructuring(updatedUser);
-        console.log(destructuredUser);
+        const destructuredUser = UserDestructuring(updatedUser);
 
         res.status(200).json({
             firstName: destructuredUser.firstName,

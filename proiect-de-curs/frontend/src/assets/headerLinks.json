@@ -3,23 +3,30 @@
         "publicLinks": [
             {
                 "name": "home",
-                "path": "/"
+                "path": "/",
+                "icon": "home"
             },
             {
-                "name": "about",
-                "path": "/about"
-            },
-            {
-                "name": "contact",
-                "path": "/contact"
+                "name": "grupuri",
+                "path": "/groups",
+                "icon": "group"
             }
         ]
     },
     {
-        "privateLinks": [
+        "dropdownLinks": [
             {
-                "name": "logout",
-                "path": "/logout"
+                "name": "edit profile",
+                "path": "/userProfile",
+                "icon": "settings"
+            },
+            {
+                "name": "my posts",
+                "path": "/myPosts"
+            },
+            {
+                "name": "a",
+                "path": "/"
             }
         ]
     }
