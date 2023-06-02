@@ -49,16 +49,30 @@ export const getPosts = createAsyncThunk(
 
 export const getPost = createAsyncThunk(
     'post/getPost',
-    async (postId: string) => {
+    async ({ postId }: any, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`/get-post?postId=${postId}`);
-            return response.data;
+            const response = await axios.get(`/get-post/${postId}`, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('accessToken')}`,
+                },
+            });
+
+            return {
+                post: response.data.post,
+                status: response.status,
+            };
         } catch (error) {
             if (isAxiosError(error)) {
-                return {};
+                return rejectWithValue({
+                    post: null,
+                    status: error.response?.status,
+                });
             }
 
-            return {};
+            return rejectWithValue({
+                post: null,
+                status: 500,
+            });
         }
     }
 );
@@ -216,70 +230,34 @@ export const deletePostImage = createAsyncThunk(
     }
 );
 
-// TODO: implement like, unlike, comment, uncomment
-// export const likePost = createAsyncThunk(
-//     'post/likePost',
-//     async (postId: string) => {
-//         try {
-//             const response = await axios.post('/like-post', { postId });
-//             return response.data;
-//         } catch (error) {
-//             if (isAxiosError(error)) {
-//                 return {};
-//             }
-//
-//             return {};
-//         }
-//     }
-// );
-//
-// export const unlikePost = createAsyncThunk(
-//     'post/unlikePost',
-//     async (postId: string) => {
-//         try {
-//             const response = await axios.post('/unlike-post', { postId });
-//             return response.data;
-//         } catch (error) {
-//             if (isAxiosError(error)) {
-//                 return {};
-//             }
-//
-//             return {};
-//         }
-//     }
-// );
-//
-// export const commentPost = createAsyncThunk(
-//     'post/commentPost',
-//     async (comment: string) => {
-//         try {
-//             const response = await axios.post('/comment-post', { comment });
-//             return response.data;
-//         } catch (error) {
-//             if (isAxiosError(error)) {
-//                 return {};
-//             }
-//
-//             return {};
-//         }
-//     }
-// );
-//
-// export const uncommentPost = createAsyncThunk(
-//     'post/uncommentPost',
-//     async (commentId: string) => {
-//         try {
-//             const response = await axios.post('/uncomment-post', { commentId });
-//             return response.data;
-//         } catch (error) {
-//             if (isAxiosError(error)) {
-//                 return {};
-//             }
-//
-//             return {};
-//         }
-//     }
-// );
+export const reactToPost = createAsyncThunk(
+    'post/reactToPost',
+    async ({ postId, reactionType, email, comment }: any) => {
+        try {
+            const response = await axios.patch(
+                `/react-to-post/${postId}/${reactionType}`,
+                { email, content: comment },
+                {
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get('accessToken')}`,
+                    },
+                }
+            );
+            return {
+                postId: postId,
+                reactionType: reactionType,
+                email: email,
+                comment: comment,
+            };
+        } catch (error) {
+            if (isAxiosError(error)) {
+                return {};
+            }
+
+            return {};
+        }
+    }
+);
 
 const initialState = {
     posts: [],
@@ -307,10 +285,6 @@ const postSlice = createSlice({
             state.totalPostsNumber = action.payload.totalPostsNumber;
             state.status = action.payload.status;
         });
-        builder.addCase(getPost.fulfilled, (state, action) => {
-            state.posts = action.payload.posts;
-            state.status = action.payload.status;
-        });
         builder.addCase(createBasicPost.fulfilled, (state, action) => {
             state.status = action.payload.status;
         });
@@ -323,6 +297,12 @@ const postSlice = createSlice({
         });
         builder.addCase(deletePost.fulfilled, (state, action: any) => {
             state.status = action.payload.status;
+        });
+        builder.addCase(getPost.fulfilled, (state: any, action) => {
+            const postIndex = state.posts.findIndex(
+                (post: any) => post._id === action.payload.post._id
+            );
+            state.posts[postIndex] = action.payload.post;
         });
     },
 });

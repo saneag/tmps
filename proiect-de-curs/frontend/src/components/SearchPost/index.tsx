@@ -29,26 +29,28 @@ const SearchPost = ({ search, setSearch }: ISearchPost) => {
     };
 
     return (
-        <div className="relative w-60 md:w-80">
-            <input
-                placeholder="Search..."
-                value={inputValue}
-                onChange={handleInputChange}
-                className="w-full rounded-md border-2 bg-white px-3 py-2 text-xl
+        <div className="flex w-full justify-center md:justify-start">
+            <div className="relative w-60 md:w-80">
+                <input
+                    placeholder="Search..."
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    className="w-full rounded-md border-2 bg-white px-3 py-2 text-xl
                 text-black outline-none transition-all duration-300
                 focus:border-blue-500"
-                maxLength={50}
-                ref={inputRef}
-            />
-            {inputValue && (
-                <span
-                    className="material-symbols-outlined absolute right-2
+                    maxLength={50}
+                    ref={inputRef}
+                />
+                {inputValue && (
+                    <span
+                        className="material-symbols-outlined absolute right-2
                     top-3 cursor-pointer"
-                    onClick={handleClearSearch}
-                >
-                    close
-                </span>
-            )}
+                        onClick={handleClearSearch}
+                    >
+                        close
+                    </span>
+                )}
+            </div>
         </div>
     );
 };

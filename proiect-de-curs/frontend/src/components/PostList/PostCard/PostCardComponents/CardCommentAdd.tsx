@@ -1,0 +1,77 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+import { CommentInputContext, PostContext } from '../index';
+import { useAppDispatch } from 'redux/store';
+import { getPost, reactToPost } from 'redux/slices/postSlice';
+import { Components } from '../../../index';
+
+const CardCommentAdd = () => {
+    const dispatch = useAppDispatch();
+
+    const { setShowCommentInput } = React.useContext(CommentInputContext);
+    const { userPost } = React.useContext(PostContext);
+    const [comment, setComment] = React.useState('');
+
+    const handleComment = async () => {
+        if (comment === '') return;
+
+        await dispatch(
+            reactToPost({
+                postId: userPost._id,
+                reactionType: 'comment',
+                email: userPost.creator.email,
+                comment,
+            })
+        );
+
+        await dispatch(getPost({ postId: userPost._id }));
+
+        setComment('');
+        setShowCommentInput(false);
+    };
+
+    return (
+        <>
+            <motion.div
+                initial={{ opacity: 0, top: 100 }}
+                animate={{ opacity: 1, top: 0 }}
+                exit={{ opacity: 0, top: 100 }}
+                className="flex flex-col items-center border-t-2 py-2"
+            >
+                <div className="flex w-full justify-center gap-2">
+                    <div>
+                        <Components.ImageRenderer
+                            imageUrl={userPost.creator.avatarUrl}
+                            alt={'userAvatar'}
+                            className={'h-7 w-7 rounded-full'}
+                        />
+                    </div>
+                    <textarea
+                        className="w-10/12 resize-none rounded-xl border-2 border-gray-500
+                bg-transparent p-2 text-xl shadow-md focus:outline-none"
+                        maxLength={200}
+                        placeholder="Write a comment..."
+                        onChange={(e) => setComment(e.target.value)}
+                    />
+                </div>
+                <div className="mt-2 flex w-10/12 items-center justify-end gap-2">
+                    <button
+                        className="rounded-xl bg-blue-500 px-3 py-2 text-white"
+                        onClick={handleComment}
+                    >
+                        Comment
+                    </button>
+                    <button
+                        className="rounded-xl bg-red-500 px-3 py-2 text-white"
+                        onClick={() => setShowCommentInput(false)}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </motion.div>
+        </>
+    );
+};
+
+export default CardCommentAdd;
