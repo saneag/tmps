@@ -24,11 +24,11 @@ const CardBody = ({ post }: PostCardProps) => {
                 ></span>
             </div>
             {post.image && (
-                <div className="flex w-full md:w-7/12">
+                <div className="flex w-full items-center md:w-7/12">
                     <Components.ImageRenderer
                         imageUrl={post.image}
                         alt={''}
-                        className={'h-full w-full rounded-2xl'}
+                        className={'h-60 w-full rounded-2xl object-cover'}
                     />
                 </div>
             )}

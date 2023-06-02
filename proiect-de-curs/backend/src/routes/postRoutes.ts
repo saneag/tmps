@@ -36,9 +36,9 @@ postRoutes.post(
 // postRoutes.post('/comment-post', checkAuth, PostController.commentPost);
 // postRoutes.post('/uncomment-post', checkAuth, PostController.uncommentPost);
 
-postRoutes.patch('/update-post', checkAuth, PostController.updatePost);
+postRoutes.patch('/update-post/:postId', checkAuth, PostController.updatePost);
 
-postRoutes.delete('/delete-post', checkAuth, PostController.deletePost);
+postRoutes.delete('/delete-post/:postId', checkAuth, PostController.deletePost);
 postRoutes.delete('/post/postImage/:fileName', checkAuth, (req: any, res) => {
     const filePath = path.join(__dirname, `uploads/${req.params.fileName}`);
 

@@ -11,6 +11,7 @@ import { IDecodedJwt } from '../../interfaces/IUser/IDecodedJwt';
 import { UserBuilder } from './Builder/UserBuilder';
 import { IUserController } from '../../interfaces/IUser/IUserController';
 import { UserDestructuring } from '../../utils/userDestructuring';
+import Notification from '../../models/Notification';
 
 export class UserController implements IUserController {
     private static _instance: UserController;
@@ -213,8 +214,6 @@ export class UserController implements IUserController {
     }
 
     public async getUserByEmail(req: Request, res: Response): Promise<void> {
-        console.log(req.params.email);
-
         const user = await User.findOne({
             email: req.params.email,
         }).lean();
@@ -272,6 +271,58 @@ export class UserController implements IUserController {
             role: destructuredUser.role,
             avatarUrl: destructuredUser.avatarUrl,
             description: destructuredUser.description,
+        });
+    }
+
+    public async followUser(req: Request, res: Response): Promise<void> {
+        const user = await User.findById(req.params.userId).lean();
+
+        if (!user) {
+            res.status(404).json({
+                message: 'User not found',
+            });
+            return;
+        }
+
+        const userToFollow = await User.findOne({
+            email: req.params.email,
+        }).lean();
+
+        if (!userToFollow) {
+            res.status(404).json({
+                message: 'User not found',
+            });
+            return;
+        }
+
+        if (user._id.toString() === userToFollow._id.toString()) {
+            res.status(400).json({
+                message: 'You cannot follow yourself',
+            });
+            return;
+        }
+
+        await User.findByIdAndUpdate(req.params.userId, {
+            $addToSet: {
+                following: userToFollow._id,
+            },
+        });
+
+        await User.findByIdAndUpdate(userToFollow._id, {
+            $addToSet: {
+                followers: user._id,
+            },
+        });
+
+        const notification = new Notification({
+            user: user.email,
+            message: `${user.firstName} ${user.lastName} started following you`,
+        });
+
+        await notification.save();
+
+        res.status(200).json({
+            message: 'User followed',
         });
     }
 }

@@ -43,6 +43,7 @@ userRoutes.post(
 );
 
 userRoutes.patch('/user/updateUser', checkAuth, UserController.updateUser);
+userRoutes.patch('/user/follow/:email', checkAuth, UserController.followUser);
 
 userRoutes.delete('/user/userAvatar/:fileName', checkAuth, (req: any, res) => {
     const filePath = path.join(__dirname, `uploads/${req.params.fileName}`);

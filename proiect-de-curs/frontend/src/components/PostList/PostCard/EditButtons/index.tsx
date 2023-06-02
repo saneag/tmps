@@ -1,4 +1,6 @@
 import React from 'react';
+import { useAppDispatch } from 'redux/store';
+import { deletePost, setPostCreated } from 'redux/slices/postSlice';
 
 interface ButtonProps {
     type: string;
@@ -7,11 +9,23 @@ interface ButtonProps {
     onClick?: () => void;
 }
 
-const EditButtons = () => {
+interface EditButtonsProps {
+    postId: string;
+}
+
+const EditButtons = ({ postId }: EditButtonsProps) => {
+    const dispatch = useAppDispatch();
+
     const [showEditButtons, setShowEditButtons] = React.useState(false);
 
     const buttonRef = React.useRef<HTMLButtonElement>(null);
     const dropdownRef = React.useRef<HTMLDivElement>(null);
+
+    const handleDeletePost = async () => {
+        setShowEditButtons(false);
+        await dispatch(deletePost(postId));
+        dispatch(setPostCreated(true));
+    };
 
     React.useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -57,6 +71,7 @@ const EditButtons = () => {
                         type="delete"
                         className="text-red-500 drop-shadow-sm"
                         name="Delete"
+                        onClick={handleDeletePost}
                     />
                 </div>
             )}

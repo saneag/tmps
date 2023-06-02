@@ -1,17 +1,14 @@
-import { IPost } from '../IPost';
+import { IBasicPost, IImagePost, IPost, IPostUpdate } from '../IPost';
+import { ISimpleUser } from '../../IUser/IUser';
 
 export interface IPostBuilder {
-    setCreatorId(creatorId: string): IPostBuilder;
+    setCreator(creator: ISimpleUser): IPostBuilder;
     setTitle(title: string): IPostBuilder;
     setContent(content: string): IPostBuilder;
     setImage(image: string): IPostBuilder;
-    setCreatedAt(createdAt: Date): IPostBuilder;
     setUpdatedAt(updatedAt: Date): IPostBuilder;
-    setComments(comments: string[]): IPostBuilder;
-    setReactions(reactions: string[]): IPostBuilder;
-    setTags(tags: string[]): IPostBuilder;
 
-    buildSimplePost(): IPost;
-    buildPostWithImages(): IPost;
-    buildUpdate(): IPost;
+    buildSimplePost(): IBasicPost;
+    buildPostWithImages(): IImagePost;
+    buildUpdate(): IPostUpdate;
 }

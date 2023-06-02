@@ -55,7 +55,6 @@ export class UserBuilder implements IUserBuilder {
             email: this.email,
             passwordHash: this.passwordHash,
             avatarUrl: this.avatarUrl,
-            description: this.description,
         };
     }
 

@@ -64,6 +64,7 @@ const UserProfile = () => {
         if (modalMessage === 'ok') {
             setIsEditMode(false);
             setModalMessage('');
+            setAvatar(user.avatarUrl);
             rsForm.resetForm();
         }
     }, [modalMessage, rsForm]);
@@ -102,7 +103,7 @@ const UserProfile = () => {
                                         imageUrl={avatar}
                                         alt={'No avatar'}
                                         className={
-                                            'h-full w-full rounded-full object-cover'
+                                            'h-full w-full rounded-full object-cover text-9xl'
                                         }
                                     />
                                 ) : (
@@ -112,7 +113,7 @@ const UserProfile = () => {
                                             type={'userAvatar'}
                                             alt={'No avatar'}
                                             className={
-                                                'h-full w-full rounded-full object-cover'
+                                                'h-full w-full rounded-full object-cover text-9xl'
                                             }
                                         />
                                     </div>

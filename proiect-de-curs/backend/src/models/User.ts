@@ -67,19 +67,25 @@ const UserSchema = new mongoose.Schema<IUser>(
             type: Date,
             default: Date.now,
         },
-        friends: [
+        followers: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User',
             },
         ],
-        friendRequests: [
+        following: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User',
             },
         ],
-        friendRequestsSent: [
+        followRequests: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+        ],
+        followingRequests: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User',

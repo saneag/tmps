@@ -4,20 +4,19 @@ import Cookies from 'js-cookie';
 import axios from 'services/axios.service';
 import { isAxiosError } from 'axios';
 
-import { IPostExtended } from 'shared/interfaces/IPost';
-
 type Post = {
     limit: number;
     page: number;
     search: string;
+    email?: string;
 };
 
 export const getPosts = createAsyncThunk(
     'post/getPosts',
-    async ({ limit, page, search }: Post) => {
+    async ({ limit, page, search, email = '' }: Post) => {
         try {
             const response = await axios.get(
-                `/get-posts?limit=${limit}&page=${page}&search=${search}`,
+                `/get-posts?limit=${limit}&page=${page}&search=${search}&email=${email}`,
                 {
                     headers: {
                         Authorization: `Bearer ${Cookies.get('accessToken')}`,
@@ -27,18 +26,21 @@ export const getPosts = createAsyncThunk(
 
             return {
                 posts: response.data.posts,
+                totalPostsNumber: response.data.totalPostsNumber,
                 status: response.status as number,
             };
         } catch (error) {
             if (isAxiosError(error)) {
                 return {
                     posts: [],
+                    totalPostsNumber: 0,
                     status: error.response?.status,
                 };
             }
 
             return {
                 posts: [],
+                totalPostsNumber: 0,
                 status: 500,
             };
         }
@@ -152,10 +154,15 @@ export const deletePost = createAsyncThunk(
     'post/deletePost',
     async (postId: string) => {
         try {
-            const response = await axios.delete(
-                `/delete-post?postId=${postId}`
-            );
-            return response.data;
+            const response = await axios.delete(`/delete-post/${postId}`, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('accessToken')}`,
+                },
+            });
+
+            return {
+                status: response.status,
+            };
         } catch (error) {
             if (isAxiosError(error)) {
                 return {};
@@ -276,6 +283,7 @@ export const deletePostImage = createAsyncThunk(
 
 const initialState = {
     posts: [],
+    totalPostsNumber: 0,
     status: 200,
     isPostCreated: false,
 };
@@ -284,13 +292,19 @@ const postSlice = createSlice({
     name: 'post',
     initialState,
     reducers: {
+        resetPosts: (state) => {
+            state.posts = [];
+            state.totalPostsNumber = 0;
+            state.status = 200;
+        },
         setPostCreated: (state, action) => {
             state.isPostCreated = action.payload;
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(getPosts.fulfilled, (state, action: any) => {
-            state.posts = action.payload.posts;
+        builder.addCase(getPosts.fulfilled, (state: any, action: any) => {
+            state.posts.push(...action.payload.posts);
+            state.totalPostsNumber = action.payload.totalPostsNumber;
             state.status = action.payload.status;
         });
         builder.addCase(getPost.fulfilled, (state, action) => {
@@ -300,12 +314,14 @@ const postSlice = createSlice({
         builder.addCase(createBasicPost.fulfilled, (state, action) => {
             state.status = action.payload.status;
         });
+        builder.addCase(createPostWithImage.fulfilled, (state, action) => {
+            state.status = action.payload.status;
+        });
         builder.addCase(updatePost.fulfilled, (state, action) => {
             state.posts = action.payload.posts;
             state.status = action.payload.status;
         });
-        builder.addCase(deletePost.fulfilled, (state, action) => {
-            state.posts = action.payload.posts;
+        builder.addCase(deletePost.fulfilled, (state, action: any) => {
             state.status = action.payload.status;
         });
     },
@@ -313,4 +329,4 @@ const postSlice = createSlice({
 
 export default postSlice.reducer;
 
-export const { setPostCreated } = postSlice.actions;
+export const { resetPosts, setPostCreated } = postSlice.actions;

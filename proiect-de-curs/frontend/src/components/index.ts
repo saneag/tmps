@@ -3,6 +3,7 @@ import Loading from './Loading';
 import TextEditor from './TextEditor';
 import ModalConfirmation from './ModalConfirmation';
 import PostList from './PostList';
+import AddPost from './PostList/AddPost';
 
 import ImageRenderer from './ImageRenderer';
 
@@ -12,5 +13,6 @@ export const Components = {
     TextEditor,
     ModalConfirmation,
     PostList,
+    AddPost,
     ImageRenderer,
 };
