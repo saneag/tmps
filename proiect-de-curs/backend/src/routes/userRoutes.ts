@@ -14,23 +14,29 @@ import multerInstance from '../shared/multerInstance';
 const userRoutes = express.Router();
 const upload = multerInstance.init('userAvatar').getMulterUpload();
 
-userRoutes.get('/user', checkAuth, UserController.getUser);
-userRoutes.get('/user/:email', UserController.getUserByEmail);
+userRoutes.get('/user', checkAuth, UserController.getUser.bind(UserController));
+userRoutes.get(
+    '/user/:email',
+    UserController.getUserByEmail.bind(UserController)
+);
 
 userRoutes.post(
     '/user/register',
     registerValidation,
     validateErrors,
-    UserController.register
+    UserController.register.bind(UserController)
 );
 userRoutes.post(
     '/user/login',
     loginValidation,
     validateErrors,
-    UserController.login
+    UserController.login.bind(UserController)
 );
-userRoutes.post('/user/logout', UserController.logout);
-userRoutes.post('/user/refreshAccessToken', UserController.refreshAccessToken);
+userRoutes.post('/user/logout', UserController.logout.bind(UserController));
+userRoutes.post(
+    '/user/refreshAccessToken',
+    UserController.refreshAccessToken.bind(UserController)
+);
 userRoutes.post(
     '/user/userAvatar',
     checkAuth,
@@ -42,7 +48,11 @@ userRoutes.post(
     }
 );
 
-userRoutes.patch('/user/updateUser', checkAuth, UserController.updateUser);
+userRoutes.patch(
+    '/user/updateUser',
+    checkAuth,
+    UserController.updateUser.bind(UserController)
+);
 userRoutes.patch('/user/follow/:email', checkAuth, UserController.followUser);
 
 userRoutes.delete('/user/userAvatar/:fileName', checkAuth, (req: any, res) => {

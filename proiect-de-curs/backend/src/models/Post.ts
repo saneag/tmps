@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 
-import { IPost } from '../interfaces/IPost/IPost';
+import { IPostMongo } from '../interfaces/IPost/IPost';
+import { IComment } from '../interfaces/IPost/IComment';
 
-const PostSchema = new mongoose.Schema<IPost>({
+const PostSchema = new mongoose.Schema<IPostMongo>({
     title: {
         type: String,
         required: true,
@@ -40,11 +41,23 @@ const PostSchema = new mongoose.Schema<IPost>({
         },
     },
     comments: {
-        type: [String],
+        type: [{} as IComment],
         default: [],
     },
     reactions: {
-        type: [String],
+        type: [
+            {
+                email: {
+                    type: String,
+                },
+                like: {
+                    type: Boolean,
+                },
+                dislike: {
+                    type: Boolean,
+                },
+            },
+        ],
         default: [],
     },
     tags: {
@@ -61,4 +74,4 @@ const PostSchema = new mongoose.Schema<IPost>({
     },
 });
 
-export default mongoose.model<IPost>('Post', PostSchema);
+export default mongoose.model<IPostMongo>('Post', PostSchema);

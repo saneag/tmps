@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { ISimpleUser, IUser } from '../IUser/IUser';
+import { IComment } from './IComment';
 
 export interface IPostMongo extends IPost, mongoose.Document {
     _id: string;
@@ -11,8 +12,8 @@ export interface IPost extends IImagePost {
     content: string;
     createdAt: Date;
     updatedAt: Date;
-    comments: string[];
-    reactions: string[];
+    comments: IComment[];
+    reactions: IPostReaction[];
     tags: string[];
 }
 
@@ -31,4 +32,10 @@ export interface IPostUpdate {
     content: string;
     image: string;
     updatedAt: Date;
+}
+
+export interface IPostReaction {
+    email: string;
+    like?: boolean;
+    dislike?: boolean;
 }

@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="242aac1d-eb14-41a0-ada4-307e18b9ce02" name="Changes" comment="WIP: posts page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/Post/PostController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/Post/PostController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ModalConfirmation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ModalConfirmation/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/SearchPost/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SearchPost/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PostList/PostCard/PostCardComponents/CardCommentAdd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PostList/PostCard/PostCardComponents/CardCommentAdd.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PostList/PostCard/PostCardComponents/CardComments.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PostList/PostCard/PostCardComponents/CardComments.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PostList/PostCard/PostCardComponents/CardFooter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PostList/PostCard/PostCardComponents/CardFooter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/redux/slices/postSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/redux/slices/postSlice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/shared/interfaces/IComment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/shared/interfaces/IComment.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,29 +41,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feat/post-page-behavioral-patterns",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "18.14.0",
-    "javascript.nodejs.core.library.typings.version": "18.14.0",
-    "jsx.switch.disabled": "true",
-    "last_opened_file_path": "C:/Users/garst/Desktop/tmps/proiect-de-curs/backend",
-    "list.type.of.created.stylesheet": "SCSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\garst\\Desktop\\tmps\\proiect-de-curs\\frontend\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Users\\garst\\Desktop\\tmps\\proiect-de-curs\\backend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/behavioral-patterns&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.14.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.14.0&quot;,
+    &quot;jsx.switch.disabled&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/garst/Desktop/tmps/proiect-de-curs/backend&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\garst\\Desktop\\tmps\\proiect-de-curs\\frontend\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\garst\\Desktop\\tmps\\proiect-de-curs\\backend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="Push.Settings">
     <force-push-targets>
       <force-push-target remote-path="origin" branch="feat/login-register-backend" />
@@ -182,6 +183,11 @@
       <workItem from="1685473435437" duration="2470000" />
       <workItem from="1685517885005" duration="6122000" />
       <workItem from="1685626619312" duration="7568000" />
+      <workItem from="1685699840700" duration="516000" />
+      <workItem from="1685711794000" duration="28000" />
+      <workItem from="1685711836620" duration="4179000" />
+      <workItem from="1685722936515" duration="6792000" />
+      <workItem from="1685781742636" duration="6709000" />
     </task>
     <task id="LOCAL-00001" summary="Finish backend login/register">
       <created>1682182695503</created>

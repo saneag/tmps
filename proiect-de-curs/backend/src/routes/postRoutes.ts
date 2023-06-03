@@ -9,14 +9,27 @@ import fs from 'fs';
 const postRoutes = express.Router();
 const upload = multerInstance.init('postImage').getMulterUpload();
 
-postRoutes.get('/get-post', checkAuth, PostController.getPost);
-postRoutes.get('/get-posts', checkAuth, PostController.getPosts);
+postRoutes.get(
+    '/get-posts',
+    checkAuth,
+    PostController.getPosts.bind(PostController)
+);
 
-postRoutes.post('/create-post', checkAuth, PostController.createPost);
+postRoutes.get(
+    '/get-post/:postId',
+    checkAuth,
+    PostController.getPost.bind(PostController)
+);
+
+postRoutes.post(
+    '/create-post',
+    checkAuth,
+    PostController.createPost.bind(PostController)
+);
 postRoutes.post(
     '/create-post-with-image',
     checkAuth,
-    PostController.createPostWithImage
+    PostController.createPostWithImage.bind(PostController)
 );
 
 postRoutes.post(
@@ -30,15 +43,23 @@ postRoutes.post(
     }
 );
 
-// TODO: implement like, unlike, comment, uncomment
-// postRoutes.post('/like-post', checkAuth, PostController.likePost);
-// postRoutes.post('/unlike-post', checkAuth, PostController.unlikePost);
-// postRoutes.post('/comment-post', checkAuth, PostController.commentPost);
-// postRoutes.post('/uncomment-post', checkAuth, PostController.uncommentPost);
+postRoutes.patch(
+    '/react-to-post/:postId/:reactionType',
+    checkAuth,
+    PostController.reactToPost.bind(PostController)
+);
 
-postRoutes.patch('/update-post/:postId', checkAuth, PostController.updatePost);
+postRoutes.patch(
+    '/update-post/:postId',
+    checkAuth,
+    PostController.updatePost.bind(PostController)
+);
 
-postRoutes.delete('/delete-post/:postId', checkAuth, PostController.deletePost);
+postRoutes.delete(
+    '/delete-post/:postId',
+    checkAuth,
+    PostController.deletePost.bind(PostController)
+);
 postRoutes.delete('/post/postImage/:fileName', checkAuth, (req: any, res) => {
     const filePath = path.join(__dirname, `uploads/${req.params.fileName}`);
 

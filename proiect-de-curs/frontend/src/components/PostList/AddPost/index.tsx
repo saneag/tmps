@@ -12,6 +12,31 @@ const AddPost = () => {
     const [isAddPostFormOpen, setIsAddPostFormOpen] =
         React.useState<boolean>(false);
 
+    const addPostPhrases = [
+        'What is new for today?',
+        'How are you today?',
+        'Tell us about your day',
+        'What is your mood today?',
+        'Share your thoughts',
+        'What is new?',
+        'What is on your mind?',
+    ];
+
+    const [addPostPhrase, setAddPostPhrase] = React.useState<string>(
+        addPostPhrases[Math.floor(Math.random() * addPostPhrases.length)]
+    );
+
+    const handleAddPostFormOpen = () => {
+        setIsAddPostFormOpen(true);
+        setTimeout(() => {
+            setAddPostPhrase(
+                addPostPhrases[
+                    Math.floor(Math.random() * addPostPhrases.length)
+                ]
+            );
+        }, 200);
+    };
+
     return (
         <>
             <div
@@ -33,10 +58,10 @@ const AddPost = () => {
                 <div className="flex w-10/12">
                     <div
                         className="flex w-full cursor-pointer items-center rounded-2xl bg-gray-600 p-3 hover:bg-gray-700"
-                        onClick={() => setIsAddPostFormOpen(true)}
+                        onClick={handleAddPostFormOpen}
                     >
                         <span className="text-2xl text-white">
-                            What is new for today?
+                            {addPostPhrase}
                         </span>
                     </div>
                 </div>
