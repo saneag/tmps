@@ -1,8 +1,11 @@
-import { ICommand } from '../../../interfaces/IUser/Command/ICommand';
-import { hashPassword } from '../../../utils/PasswordHashFacade';
-import { UserBuilder } from '../Builder/UserBuilder';
-import User from '../../../models/User';
 import { Request, Response } from 'express';
+
+import User from '../../../models/User';
+
+import { ICommand } from '../../../interfaces/IUser/Command/ICommand';
+import { UserBuilder } from '../Builder/UserBuilder';
+
+import { hashPassword } from '../../../utils/PasswordHashFacade';
 
 export class Register implements ICommand {
     public async execute(req: Request, res: Response): Promise<void> {

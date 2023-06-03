@@ -1,8 +1,11 @@
-import { ICommand } from '../../../interfaces/IUser/Command/ICommand';
 import { Request, Response } from 'express';
-import User from '../../../models/User';
-import { comparePasswords } from '../../../utils/PasswordHashFacade';
 import jwt from 'jsonwebtoken';
+
+import User from '../../../models/User';
+
+import { ICommand } from '../../../interfaces/IUser/Command/ICommand';
+
+import { comparePasswords } from '../../../utils/PasswordHashFacade';
 
 export class Login implements ICommand {
     public async execute(req: Request, res: Response): Promise<void> {

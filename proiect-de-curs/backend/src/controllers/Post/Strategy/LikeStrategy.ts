@@ -4,55 +4,60 @@ import Post from '../../../models/Post';
 
 export class LikeStrategy implements IStrategy {
     public async performAction(req: Request, res: Response): Promise<void> {
-        const { postId } = req.params;
-        const { email } = req.body;
+        try {
+            const { postId } = req.params;
+            const { email } = req.body;
 
-        const post = await Post.findById(postId);
+            const post = await Post.findById(postId);
 
-        if (!post) {
-            res.status(404).json({ message: 'Post not found.' });
-            return;
-        }
+            if (!post) {
+                res.status(404).json({ message: 'Post not found.' });
+                return;
+            }
 
-        const isLiked = post.reactions.some(
-            (reaction) => reaction.email === email && reaction.like === true
-        );
+            const isLiked = post.reactions.some(
+                (reaction) => reaction.email === email && reaction.like === true
+            );
 
-        const isDislike = post.reactions.some(
-            (reaction) => reaction.email === email && reaction.dislike === true
-        );
+            const isDislike = post.reactions.some(
+                (reaction) =>
+                    reaction.email === email && reaction.dislike === true
+            );
 
-        if (isLiked) {
-            await Post.findByIdAndUpdate(postId, {
-                $pull: {
-                    reactions: {
-                        email,
-                        like: true,
+            if (isLiked) {
+                await Post.findByIdAndUpdate(postId, {
+                    $pull: {
+                        reactions: {
+                            email,
+                            like: true,
+                        },
                     },
-                },
-            });
-        } else {
-            await Post.findByIdAndUpdate(postId, {
-                $push: {
-                    reactions: {
-                        email,
-                        like: true,
+                });
+            } else {
+                await Post.findByIdAndUpdate(postId, {
+                    $push: {
+                        reactions: {
+                            email,
+                            like: true,
+                        },
                     },
-                },
-            });
-        }
+                });
+            }
 
-        if (isDislike) {
-            await Post.findByIdAndUpdate(postId, {
-                $pull: {
-                    reactions: {
-                        email,
-                        dislike: true,
+            if (isDislike) {
+                await Post.findByIdAndUpdate(postId, {
+                    $pull: {
+                        reactions: {
+                            email,
+                            dislike: true,
+                        },
                     },
-                },
-            });
-        }
+                });
+            }
 
-        res.status(200).json({ message: 'Success.' });
+            res.status(200).json({ message: 'Success.' });
+        } catch (error) {
+            res.status(500).json({ message: 'Something went wrong.' });
+        }
     }
 }

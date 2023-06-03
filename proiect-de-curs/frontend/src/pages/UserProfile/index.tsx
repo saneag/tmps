@@ -67,11 +67,11 @@ const UserProfile = () => {
             setAvatar(user.avatarUrl);
             rsForm.resetForm();
         }
-    }, [modalMessage, rsForm]);
+    }, [modalMessage, rsForm, user.avatarUrl]);
 
     React.useEffect(() => {
         setAvatar(user.avatarUrl);
-    }, []);
+    }, [user.avatarUrl]);
 
     return (
         <div className="flex justify-center p-3">
@@ -94,7 +94,7 @@ const UserProfile = () => {
                     actions.setSubmitting(true);
                 }}
             >
-                {({ setErrors, resetForm, values, setFieldValue }) => (
+                {({ setErrors, resetForm, values }) => (
                     <Form className="flex flex-col gap-3">
                         <div className="flex w-full flex-col flex-wrap content-center items-center gap-3">
                             <div className="relative flex h-32 w-32 rounded-full">
@@ -161,8 +161,7 @@ const UserProfile = () => {
                             <FormikTextArea
                                 value={'description'}
                                 disabled={!isEditMode}
-                                values={values}
-                                setFieldValue={setFieldValue}
+                                placeholder={values.description}
                             />
                         </div>
 

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.ts",
     "build": "rimraf ./build && tsc",
-    "prod": "npm run build && node build/index.js",
+    "copy-uploads": "ncp ./src/uploads ./build/uploads",
+    "prod": "npm run build && npm run copy-uploads && node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -30,6 +31,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/multer": "^1.4.7",
     "@types/node": "^18.15.13",
+    "ncp": "^2.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }

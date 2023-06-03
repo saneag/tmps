@@ -2,14 +2,16 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 
+import UserController from '../controllers/User/UserController';
+
+import multerInstance from '../shared/multerInstance';
+
 import {
     checkAuth,
     loginValidation,
     registerValidation,
     validateErrors,
 } from '../middlewares';
-import UserController from '../controllers/User/UserController';
-import multerInstance from '../shared/multerInstance';
 
 const userRoutes = express.Router();
 const upload = multerInstance.init('userAvatar').getMulterUpload();

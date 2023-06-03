@@ -11,13 +11,12 @@ import postRoutes from './routes/postRoutes';
 const app = express();
 dotenv.config();
 
-const db = Database.getConnection();
+Database.getConnection();
 
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/api/hf', userRoutes);
-app.use('/api/hf', postRoutes);
+app.use('/api/hf', userRoutes, postRoutes);
 
 const PORT = process.env.PORT;
 

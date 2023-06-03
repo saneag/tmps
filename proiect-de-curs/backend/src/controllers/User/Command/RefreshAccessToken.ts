@@ -1,8 +1,10 @@
-import { ICommand } from '../../../interfaces/IUser/Command/ICommand';
-import jwt from 'jsonwebtoken';
-import { IDecodedJwt } from '../../../interfaces/IUser/IDecodedJwt';
-import User from '../../../models/User';
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+
+import User from '../../../models/User';
+
+import { ICommand } from '../../../interfaces/IUser/Command/ICommand';
+import { IDecodedJwt } from '../../../interfaces/IUser/IDecodedJwt';
 
 export class RefreshAccessToken implements ICommand {
     public async execute(req: Request, res: Response): Promise<void> {

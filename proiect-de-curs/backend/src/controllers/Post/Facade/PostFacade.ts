@@ -2,8 +2,10 @@ import {
     ITextEditor,
     ITextSimplify,
 } from '../../../interfaces/IPost/Decorator/IPostDecorator';
+
 import { BasicTextEditor } from '../Decorator/TextDecorator';
 import { BasicTextEditorSimplify } from '../Decorator/TextSimplify';
+
 import { decorators, simplifyDecorators } from '../Decorator/Decorators';
 
 export class PostFacade {

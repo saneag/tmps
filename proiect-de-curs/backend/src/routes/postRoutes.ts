@@ -1,10 +1,13 @@
 import express from 'express';
 
-import multerInstance from '../shared/multerInstance';
-import { checkAuth } from '../middlewares';
-import PostController from '../controllers/Post/PostController';
 import path from 'path';
 import fs from 'fs';
+
+import multerInstance from '../shared/multerInstance';
+
+import PostController from '../controllers/Post/PostController';
+
+import { checkAuth } from '../middlewares';
 
 const postRoutes = express.Router();
 const upload = multerInstance.init('postImage').getMulterUpload();
