@@ -1,4 +1,4 @@
-import { IBasicPost, IImagePost, IPost, IPostUpdate } from '../IPost';
+import { IBasicPost, IImagePost, IPostUpdate } from '../IPost';
 import { ISimpleUser } from '../../IUser/IUser';
 
 export interface IPostBuilder {

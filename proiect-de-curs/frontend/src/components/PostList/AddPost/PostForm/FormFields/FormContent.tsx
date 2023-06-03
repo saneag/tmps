@@ -38,7 +38,20 @@ const FormContent = ({ content, setContent }: Props) => {
                 <div className="flex w-full justify-evenly">
                     <MenuBar editor={editor} />
                 </div>
-                <EditorContent editor={editor} className="w-full" />
+                <div className="w-full">
+                    <EditorContent editor={editor} className="w-full" />
+                    <span className="flex justify-end">
+                        <span
+                            className={`${
+                                content.replace(/ class=".*?"/g, '').length >
+                                    1000 && 'font-bold text-red-500'
+                            }`}
+                        >
+                            {content.replace(/ class=".*?"/g, '').length}
+                        </span>
+                        /1000
+                    </span>
+                </div>
             </div>
         </div>
     );

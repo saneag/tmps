@@ -47,15 +47,21 @@ const CardCommentAdd = () => {
                             className={'h-7 w-7 rounded-full'}
                         />
                     </div>
-                    <textarea
-                        className="w-10/12 resize-none rounded-xl border-2 border-gray-500
-                bg-transparent p-2 text-xl shadow-md focus:outline-none"
-                        maxLength={200}
-                        placeholder="Write a comment..."
-                        onChange={(e) => setComment(e.target.value)}
-                    />
+                    <div className="relative w-10/12">
+                        <textarea
+                            className="scrollbar w-full resize-none rounded-xl
+                            border-2 border-gray-500 bg-transparent p-2 text-xl
+                            shadow-md focus:outline-none"
+                            maxLength={300}
+                            placeholder="Write a comment..."
+                            onChange={(e) => setComment(e.target.value)}
+                        />
+                        <span className="absolute -bottom-3 right-0">
+                            {comment.length}/300
+                        </span>
+                    </div>
                 </div>
-                <div className="mt-2 flex w-10/12 items-center justify-end gap-2">
+                <div className="mt-5 flex w-10/12 items-center justify-end gap-2">
                     <button
                         className="rounded-xl bg-blue-500 px-3 py-2 text-white"
                         onClick={handleComment}

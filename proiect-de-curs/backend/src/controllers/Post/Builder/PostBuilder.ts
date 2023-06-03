@@ -1,7 +1,7 @@
 import { IPostBuilder } from '../../../interfaces/IPost/Builder/IPostBuilder';
 import {
-    IImagePost,
     IBasicPost,
+    IImagePost,
     IPostUpdate,
 } from '../../../interfaces/IPost/IPost';
 import { ISimpleUser } from '../../../interfaces/IUser/IUser';

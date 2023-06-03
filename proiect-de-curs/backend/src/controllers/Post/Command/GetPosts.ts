@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 
-import { ICommand } from '../../../interfaces/IPost/Command/ICommand';
 import Post from '../../../models/Post';
+
+import { ICommand } from '../../../interfaces/IPost/Command/ICommand';
+
 import { PostDecorator } from '../Decorator/PostDecorator';
 
 export class GetPosts implements ICommand {

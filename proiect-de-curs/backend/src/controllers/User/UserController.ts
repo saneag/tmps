@@ -3,15 +3,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import { hashPassword, comparePasswords } from '../../utils/PasswordHashFacade';
-
 import User from '../../models/User';
-import { IDecodedJwt } from '../../interfaces/IUser/IDecodedJwt';
-import { UserBuilder } from './Builder/UserBuilder';
-import { IUserController } from '../../interfaces/IUser/IUserController';
-import { UserDestructuring } from '../../utils/userDestructuring';
 import Notification from '../../models/Notification';
+
+import { IUserController } from '../../interfaces/IUser/IUserController';
 import { ICommand } from '../../interfaces/IUser/Command/ICommand';
+
 import { userCommands } from './Command';
 
 export class UserController implements IUserController {

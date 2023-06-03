@@ -32,18 +32,33 @@ export const FormikTextArea = ({ value, placeholder, disabled }: any) => {
             <label htmlFor={value} className="capitalize">
                 {value}
             </label>
-            <Field
-                as="textarea"
-                id={value}
-                name={value}
-                placeholder={placeholder}
-                className={`mb-4 min-h-[200px] w-80 resize-none rounded-md border-2
+            <div className="relative">
+                <Field
+                    as="textarea"
+                    id={value}
+                    name={value}
+                    placeholder={placeholder}
+                    className={`mb-4 min-h-[200px] w-80 resize-none rounded-md border-2
               bg-white p-3 text-xl text-black outline-none duration-300 ${
                   disabled && 'cursor-default'
               }
             `}
-                disabled={disabled}
-            />
+                    disabled={disabled}
+                />
+                {!disabled && (
+                    <span className="absolute bottom-0 right-2">
+                        <span
+                            className={`${
+                                placeholder.length > 300 &&
+                                'font-bold text-red-500'
+                            }`}
+                        >
+                            {placeholder.length}
+                        </span>
+                        /300
+                    </span>
+                )}
+            </div>
             <ErrorMessage
                 name={value}
                 component="div"

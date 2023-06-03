@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 
-import { ICommand } from '../../../interfaces/IPost/Command/ICommand';
 import User from '../../../models/User';
+import Post from '../../../models/Post';
+
+import { ICommand } from '../../../interfaces/IPost/Command/ICommand';
+
 import { PostDecorator } from '../Decorator/PostDecorator';
 import { PostBuilder } from '../Builder/PostBuilder';
-import Post from '../../../models/Post';
 
 export class CreatePostWithImage implements ICommand {
     public async execute(req: Request, res: Response): Promise<void> {

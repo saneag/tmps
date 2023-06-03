@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 
-import { ICommand } from '../../../interfaces/IPost/Command/ICommand';
 import Post from '../../../models/Post';
+
+import { ICommand } from '../../../interfaces/IPost/Command/ICommand';
 
 export class DeletePost implements ICommand {
     public async execute(req: Request, res: Response): Promise<void> {
-        const { postId } = req.params;
-
         try {
+            const { postId } = req.params;
+
             const post = await Post.findById(postId).lean();
 
             if (!post) {

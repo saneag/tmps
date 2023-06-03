@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import { ISimpleUser, IUser } from '../IUser/IUser';
+
+import { ISimpleUser } from '../IUser/IUser';
 import { IComment } from './IComment';
 
 export interface IPostMongo extends IPost, mongoose.Document {

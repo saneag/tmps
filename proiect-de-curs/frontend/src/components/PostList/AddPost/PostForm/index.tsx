@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FileUploader } from 'react-drag-drop-files';
 
 import { useAppDispatch } from 'redux/store';
 import {
@@ -12,7 +13,6 @@ import {
 
 import FormTitle from './FormFields/FormTitle';
 import FormContent from './FormFields/FormContent';
-import { FileUploader } from 'react-drag-drop-files';
 
 interface IProps {
     setIsAddPostFormOpen: (isAddPostFormOpen: boolean) => void;
@@ -89,6 +89,7 @@ const PostForm = ({ setIsAddPostFormOpen }: IProps) => {
                             types={fileTypes}
                             multiple={false}
                             label="Drag & Drop your avatar here"
+                            classes="md:!min-w-[322px] !min-w-[200px]"
                         />
                     </div>
                     <div className="flex justify-center">

@@ -52,6 +52,7 @@ const UserSchema = new mongoose.Schema<IUser>(
         },
         description: {
             type: String,
+            maxLength: 300,
             default: '',
         },
         role: {
