@@ -2,12 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 import { CommentInputContext, PostContext } from '../index';
-import { useAppDispatch } from 'redux/store';
+import { useAppDispatch, useAppSelector } from 'redux/store';
 import { getPost, reactToPost } from 'redux/slices/postSlice';
 import { Components } from '../../../index';
 
 const CardCommentAdd = () => {
     const dispatch = useAppDispatch();
+    const user = useAppSelector((state) => state.userReducer.user);
 
     const { setShowCommentInput } = React.useContext(CommentInputContext);
     const { userPost } = React.useContext(PostContext);
@@ -20,7 +21,7 @@ const CardCommentAdd = () => {
             reactToPost({
                 postId: userPost._id,
                 reactionType: 'comment',
-                email: userPost.creator.email,
+                email: user.email,
                 comment,
             })
         );
@@ -42,7 +43,8 @@ const CardCommentAdd = () => {
                 <div className="flex w-full justify-center gap-2">
                     <div>
                         <Components.ImageRenderer
-                            imageUrl={userPost.creator.avatarUrl}
+                            imageUrl={user.avatarUrl}
+                            type={'userAvatar'}
                             alt={'userAvatar'}
                             className={'h-7 w-7 rounded-full'}
                         />

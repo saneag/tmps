@@ -36,7 +36,7 @@ const PostCard = ({ post }: PostCardProps) => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="w-full rounded-xl bg-gray-300 md:min-w-[600px]"
+            className="w-full rounded-xl bg-gray-300"
         >
             <PostContext.Provider value={{ userPost, setUserPost }}>
                 <CardHeader />

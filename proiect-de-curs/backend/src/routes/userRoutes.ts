@@ -21,6 +21,7 @@ userRoutes.get(
     '/user/:email',
     UserController.getUserByEmail.bind(UserController)
 );
+userRoutes.get('/users', UserController.getAllUsers.bind(UserController));
 
 userRoutes.post(
     '/user/register',
@@ -55,7 +56,6 @@ userRoutes.patch(
     checkAuth,
     UserController.updateUser.bind(UserController)
 );
-userRoutes.patch('/user/follow/:email', checkAuth, UserController.followUser);
 
 userRoutes.delete('/user/userAvatar/:fileName', checkAuth, (req: any, res) => {
     const filePath = path.join(__dirname, `uploads/${req.params.fileName}`);

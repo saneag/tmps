@@ -14,7 +14,6 @@ export const UserDestructuring = (user: any) => {
         firstName,
         lastName,
         email,
-        role,
         avatarUrl,
         description,
         createdAt,

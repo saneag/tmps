@@ -164,6 +164,29 @@ export const getUserByEmail = createAsyncThunk(
     }
 );
 
+export const getUsers = createAsyncThunk('user/getUsers', async () => {
+    try {
+        const response = await axios.get('/users', {
+            headers: {
+                Authorization: `Bearer ${Cookies.get('accessToken')}`,
+            },
+        });
+        return {
+            users: response.data.users,
+        };
+    } catch (error) {
+        if (isAxiosError(error)) {
+            return {
+                users: [],
+            };
+        }
+
+        return {
+            users: [],
+        };
+    }
+});
+
 export const updateUser = createAsyncThunk(
     'user/updateUser',
     async (user: IUserEdit) => {
@@ -243,6 +266,7 @@ const initialState = {
     isAuthenticated: false,
     user: {} as IUserResponse,
     visitedUser: {} as IUserResponse,
+    users: [] as IUserResponse[],
 };
 
 export const userSlice = createSlice({
@@ -274,6 +298,9 @@ export const userSlice = createSlice({
         );
         builder.addCase(getUserByEmail.fulfilled, (state, action) => {
             state.visitedUser = action.payload.visitedUser;
+        });
+        builder.addCase(getUsers.fulfilled, (state, action) => {
+            state.users = action.payload.users;
         });
         builder.addCase(logout.fulfilled, (state, action) => {
             state.isAuthenticated = action.payload.isAuthenticated;

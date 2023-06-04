@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7f9e28d4-fd03-4ede-981c-ad88365ad11c",
+		"_postman_id": "3d4956b5-cefb-4e31-b3e7-08ca0bf0212d",
 		"name": "HF",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -328,6 +328,34 @@
 						"react-to-post",
 						"6474b424bead8e0c23d9b734",
 						"like"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user/all",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"all"
 					]
 				}
 			},

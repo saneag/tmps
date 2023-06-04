@@ -12,9 +12,10 @@ import SearchPost from '../SearchPost';
 
 interface IPostList {
     children?: React.ReactNode;
+    className?: string;
 }
 
-const PostList = ({ children }: IPostList) => {
+const PostList = ({ children, className }: IPostList) => {
     const dispatch = useAppDispatch();
     const { email } = useParams();
 
@@ -31,7 +32,7 @@ const PostList = ({ children }: IPostList) => {
     const fetchPosts = async (limit = 10) => {
         try {
             dispatch(resetPosts());
-            await dispatch(getPosts({ limit, page, search, email }));
+            await dispatch(getPosts({ limit, page: 1, search, email }));
         } catch (error) {
             console.log(error);
         }
@@ -50,22 +51,26 @@ const PostList = ({ children }: IPostList) => {
 
     React.useEffect(() => {
         fetchPosts();
+        setPage(1);
     }, [search]);
 
     React.useEffect(() => {
         if (isPostCreated) {
             fetchPosts();
+            setPage(1);
             dispatch(setPostCreated(false));
         }
     }, [isPostCreated]);
 
     return (
         <div
-            className="container flex w-full flex-col
-            gap-10 md:w-10/12 lg:w-8/12 xl:w-6/12"
+            className={`col-span-3 flex w-full
+            flex-col gap-10 justify-self-center md:w-10/12 ${className}`}
         >
-            <SearchPost search={search} setSearch={setSearch} />
-            {children}
+            <div className="flex flex-col items-center gap-5 md:flex-row">
+                <SearchPost search={search} setSearch={setSearch} />
+                {children}
+            </div>
             <InfiniteScroll
                 next={fetchMorePosts}
                 hasMore={posts.length < totalPostsNumber}
