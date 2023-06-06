@@ -31,7 +31,7 @@ const CardHeader = () => {
                     </span>
                 </Link>
             </div>
-            <div className="col-span-3 row-start-2 flex justify-center text-center md:col-span-1 md:col-start-2 md:row-span-2 md:row-start-1">
+            <div className="col-span-3 row-start-2 flex justify-center text-center lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1">
                 <span className="w-full overflow-ellipsis break-words text-2xl font-bold">
                     {userPost.title}
                 </span>

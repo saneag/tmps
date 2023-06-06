@@ -7,14 +7,14 @@ const CardBody = () => {
 
     return (
         <div
-            className={`flex flex-col gap-2 border-b-2 p-3 md:flex-row ${
+            className={`flex flex-col gap-2 border-b-2 p-3 lg:flex-row ${
                 !userPost.image && 'justify-center'
             }`}
         >
             <div
                 className={`flex w-full items-center pl-3 ${
-                    userPost.image ? 'md:w-5/12' : 'md:w-8/12'
-                } md:p-0`}
+                    userPost.image ? 'lg:w-5/12' : 'lg:w-8/12'
+                } lg:p-0`}
             >
                 <span
                     dangerouslySetInnerHTML={{ __html: userPost.content }}
@@ -22,7 +22,7 @@ const CardBody = () => {
                 ></span>
             </div>
             {userPost.image && (
-                <div className="flex w-full items-center md:w-7/12">
+                <div className="flex w-full items-center lg:w-7/12">
                     <Components.ImageRenderer
                         imageUrl={userPost.image}
                         alt={''}
