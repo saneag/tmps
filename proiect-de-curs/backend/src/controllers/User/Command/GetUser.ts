@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import User from '../../../models/User';
 
 import { ICommand } from '../../../interfaces/IUser/Command/ICommand';
+import { UserDestructuring } from '../../../utils/userDestructuring';
 
 export class GetUser implements ICommand {
     public async execute(req: Request, res: Response): Promise<void> {
@@ -16,13 +17,14 @@ export class GetUser implements ICommand {
                 return;
             }
 
+            const destructuredUser = UserDestructuring(user);
+
             res.status(200).json({
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                role: user.role,
-                avatarUrl: user.avatarUrl,
-                description: user.description,
+                firstName: destructuredUser.firstName,
+                lastName: destructuredUser.lastName,
+                email: destructuredUser.email,
+                avatarUrl: destructuredUser.avatarUrl,
+                description: destructuredUser.description,
             });
         } catch (error) {
             res.status(500).json({

@@ -3,9 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import User from '../../models/User';
-import Notification from '../../models/Notification';
-
 import { IUserController } from '../../interfaces/IUser/IUserController';
 import { ICommand } from '../../interfaces/IUser/Command/ICommand';
 
@@ -20,6 +17,7 @@ export class UserController implements IUserController {
     private logoutCommand: ICommand;
     private getUserCommand: ICommand;
     private getUserByEmailCommand: ICommand;
+    private getUsersCommand: ICommand;
     private updateUserCommand: ICommand;
 
     private constructor() {
@@ -29,6 +27,7 @@ export class UserController implements IUserController {
         this.logoutCommand = new userCommands.logout();
         this.getUserCommand = new userCommands.getUser();
         this.getUserByEmailCommand = new userCommands.getUserByEmail();
+        this.getUsersCommand = new userCommands.getUsers();
         this.updateUserCommand = new userCommands.updateUser();
     }
 
@@ -72,56 +71,8 @@ export class UserController implements IUserController {
         await this.updateUserCommand.execute(req, res);
     }
 
-    public async followUser(req: Request, res: Response): Promise<void> {
-        const user = await User.findById(req.params.userId).lean();
-
-        if (!user) {
-            res.status(404).json({
-                message: 'User not found',
-            });
-            return;
-        }
-
-        const userToFollow = await User.findOne({
-            email: req.params.email,
-        }).lean();
-
-        if (!userToFollow) {
-            res.status(404).json({
-                message: 'User not found',
-            });
-            return;
-        }
-
-        if (user._id.toString() === userToFollow._id.toString()) {
-            res.status(400).json({
-                message: 'You cannot follow yourself',
-            });
-            return;
-        }
-
-        await User.findByIdAndUpdate(req.params.userId, {
-            $addToSet: {
-                following: userToFollow._id,
-            },
-        });
-
-        await User.findByIdAndUpdate(userToFollow._id, {
-            $addToSet: {
-                followers: user._id,
-            },
-        });
-
-        const notification = new Notification({
-            user: user.email,
-            message: `${user.firstName} ${user.lastName} started following you`,
-        });
-
-        await notification.save();
-
-        res.status(200).json({
-            message: 'User followed',
-        });
+    public async getAllUsers(req: Request, res: Response): Promise<void> {
+        await this.getUsersCommand.execute(req, res);
     }
 }
 

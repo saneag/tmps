@@ -62,11 +62,11 @@ const EditButtons = ({ postId }: EditButtonsProps) => {
                     items-center gap-2 rounded-2xl bg-neutral-200 px-3 py-1"
                     ref={dropdownRef}
                 >
-                    <Button
-                        type="edit"
-                        className="text-blue-600 drop-shadow"
-                        name="Edit"
-                    />
+                    {/*<Button*/}
+                    {/*    type="edit"*/}
+                    {/*    className="text-blue-600 drop-shadow"*/}
+                    {/*    name="Edit"*/}
+                    {/*/>*/}
                     <Button
                         type="delete"
                         className="text-red-500 drop-shadow-sm"

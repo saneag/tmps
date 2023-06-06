@@ -22,7 +22,6 @@ export interface IUserEdit extends IUser {
 }
 
 export interface IUserResponse extends IUserImage {
-    role: 'user' | 'moderator' | 'admin';
     createdAt: Date;
     updatedAt: Date;
     description: string;
@@ -32,5 +31,6 @@ export interface IUserExtended extends IUserResponse {
     _id: string;
     friends: string[];
     friendRequests: string[];
+    role: 'user' | 'moderator' | 'admin';
     friendRequestsSent: string[];
 }

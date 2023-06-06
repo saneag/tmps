@@ -12,7 +12,7 @@ const CardBody = () => {
             }`}
         >
             <div
-                className={`flex w-full pl-3 ${
+                className={`flex w-full items-center pl-3 ${
                     userPost.image ? 'md:w-5/12' : 'md:w-8/12'
                 } md:p-0`}
             >
@@ -26,7 +26,7 @@ const CardBody = () => {
                     <Components.ImageRenderer
                         imageUrl={userPost.image}
                         alt={''}
-                        className={'h-60 w-full rounded-2xl object-cover'}
+                        className={'w-full rounded-2xl'}
                     />
                 </div>
             )}

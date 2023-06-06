@@ -4,6 +4,7 @@ import { RefreshAccessToken } from './RefreshAccessToken';
 import { Logout } from './Logout';
 import { GetUser } from './GetUser';
 import { GetUserByEmail } from './GetUserByEmail';
+import { GetUsers } from './GetUsers';
 import { UpdateUser } from './UpdateUser';
 
 export const userCommands = {
@@ -13,5 +14,6 @@ export const userCommands = {
     logout: Logout,
     getUser: GetUser,
     getUserByEmail: GetUserByEmail,
+    getUsers: GetUsers,
     updateUser: UpdateUser,
 };

@@ -43,7 +43,6 @@ export class UpdateUser implements ICommand {
                 firstName: destructuredUser.firstName,
                 lastName: destructuredUser.lastName,
                 email: destructuredUser.email,
-                role: destructuredUser.role,
                 avatarUrl: destructuredUser.avatarUrl,
                 description: destructuredUser.description,
             });

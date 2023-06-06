@@ -33,11 +33,34 @@ const UserDropdown = ({ dropdownLinks }: ILinks) => {
         navigate('/');
     };
 
+    const [width, setWidth] = React.useState<number>(window.innerWidth);
+
+    function handleWindowSizeChange() {
+        setWidth(window.innerWidth);
+    }
+    React.useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, []);
+
+    const isMobile = width <= 768;
+
     return (
         <div onMouseLeave={() => setIsUserInfoOpen(false)}>
             <button
                 className="flex items-center gap-1 text-white"
-                onMouseEnter={() => setIsUserInfoOpen(true)}
+                onMouseEnter={() => {
+                    if (!isMobile) {
+                        setIsUserInfoOpen(true);
+                    }
+                }}
+                onClick={() => {
+                    if (isMobile) {
+                        setIsUserInfoOpen(!isUserInfoOpen);
+                    }
+                }}
                 ref={dropdownButtonRef}
             >
                 <div className="h-9 w-9 rounded-full">

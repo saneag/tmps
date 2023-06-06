@@ -10,7 +10,7 @@ const CardHeader = () => {
     const { userPost } = React.useContext(PostContext);
 
     return (
-        <div className="grid grid-cols-3 items-center border-b-2 p-3">
+        <div className="grid grid-cols-3 items-center gap-y-3 border-b-2 p-3">
             <div className="flex w-52 items-center gap-2">
                 <Link
                     to={`/userProfile/${userPost.creator.email}`}
@@ -32,7 +32,7 @@ const CardHeader = () => {
                 </Link>
             </div>
             <div className="col-span-3 row-start-2 flex justify-center text-center md:col-span-1 md:col-start-2 md:row-span-2 md:row-start-1">
-                <span className="w-full overflow-ellipsis text-2xl font-bold">
+                <span className="w-full overflow-ellipsis break-words text-2xl font-bold">
                     {userPost.title}
                 </span>
             </div>

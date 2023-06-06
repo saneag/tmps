@@ -1,27 +1,28 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { convertNumber } from 'utils/convertBigNumber';
-import { useAppDispatch } from 'redux/store';
+import { useAppDispatch, useAppSelector } from 'redux/store';
 import { getPost, reactToPost } from 'redux/slices/postSlice';
 import { CommentInputContext, PostContext } from '../index';
 
 const EmojiPicker = () => {
     const dispatch = useAppDispatch();
+
+    const user = useAppSelector((state) => state.userReducer.user);
+
     const { showCommentInput, setShowCommentInput } =
         React.useContext(CommentInputContext);
     const { userPost } = React.useContext(PostContext);
 
     const checkIfUserLiked = () => {
         return userPost.reactions.find(
-            (reaction) =>
-                reaction.email === userPost.creator.email && reaction.like
+            (reaction) => reaction.email === user.email && reaction.like
         );
     };
 
     const checkIfUserDisliked = () => {
         return userPost.reactions.find(
-            (reaction) =>
-                reaction.email === userPost.creator.email && reaction.dislike
+            (reaction) => reaction.email === user.email && reaction.dislike
         );
     };
 
@@ -30,7 +31,7 @@ const EmojiPicker = () => {
             reactToPost({
                 postId: userPost._id,
                 reactionType: 'like',
-                email: userPost.creator.email,
+                email: user.email,
             })
         );
 
@@ -42,7 +43,7 @@ const EmojiPicker = () => {
             reactToPost({
                 postId: userPost._id,
                 reactionType: 'dislike',
-                email: userPost.creator.email,
+                email: user.email,
             })
         );
 
