@@ -41,7 +41,7 @@ const AddPost = () => {
         <>
             <div
                 className="max-w-[420px]:flex-col flex w-full items-center
-                gap-3 rounded-2xl bg-gray-500 p-2 md:w-[600px]"
+                gap-3 rounded-2xl bg-gray-500 p-2 md:w-[400px] 2xl:w-[600px]"
             >
                 <div className="flex w-2/12 justify-center">
                     <div className="flex flex-wrap items-center justify-center rounded-full">

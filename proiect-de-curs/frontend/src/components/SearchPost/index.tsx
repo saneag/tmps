@@ -29,7 +29,7 @@ const SearchPost = ({ search, setSearch }: ISearchPost) => {
     };
 
     return (
-        <div className="flex w-full justify-center md:justify-start">
+        <div className="flex w-full justify-center xl:justify-start">
             <div className="relative w-60 md:w-80">
                 <input
                     placeholder="Search..."
